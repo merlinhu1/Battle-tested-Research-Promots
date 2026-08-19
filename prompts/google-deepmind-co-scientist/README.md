@@ -41,6 +41,13 @@ Notable techniques in the agent prompts:
   actionable insights.
 - Elo-rated outputs correlating with GPQA-diamond accuracy.
 
+## Hidden context (not published)
+
+The per-agent templates are the real prompts run by the system. The
+supervisor/orchestration code, tool integrations (web search, ChEMBL,
+UniProt, AlphaFold), and any harness-level system prompts are not part of
+the paper.
+
 ## Files
 
 Runnable prompt templates (verbatim, one per file; `{placeholders}` are filled

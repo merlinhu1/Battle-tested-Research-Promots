@@ -31,6 +31,13 @@ prompt as given.
 - **Scoped web use** — background literature only; no searching for the solution itself, and no
   declaring the problem open.
 
+## Hidden context (not published)
+
+The task prompt above is complete as the user/agent message. It assumes
+OpenAI's internal "multiagent v2" orchestration (64 concurrent agents,
+agentic tooling), which is not public — a reproduction must supply an
+equivalent agent harness.
+
 ## Files
 
 - [`prompt.md`](prompt.md) — the full prompt, nothing else. Machine-extracted

@@ -35,6 +35,13 @@ The filled solve prompt for the proven Problem #6 run (winning BSS seed idea)
 is in [`problem-6-prompt.md`](problem-6-prompt.md) — copy the file's entire
 content and run it as-is.
 
+## Hidden context (not published)
+
+The templates are complete as the messages sent. The runs used OpenAI's
+internal model with (per the report) manual orchestration for the main-body
+solutions; the programmatic loop here is the released equivalent. No system
+prompt was disclosed.
+
 ## Files
 
 - [`problem-6-prompt.md`](problem-6-prompt.md) — the complete as-run solve

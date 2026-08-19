@@ -38,6 +38,15 @@ SCOPE is your task brief from your parent"), spend governors with hard
 ceilings, originality/novelty checks, counter-target selectivity requirements
 (GDF-8 vs. GDF-11), and verified-figure grounding.
 
+## Hidden context (not published)
+
+Per the HF release, the campaign prompts assume the Claude Science agent
+harness (host.delegate, host.compute, submit_gate, wait_for_notification,
+Modal sandboxes, a Slack channel, a Drive deliverables folder) — "a public
+reader reproducing the campaign must supply equivalents." The harness system
+prompt and connectors are not published. The NMR/LC-MS prompts are the
+complete user messages; the Claude Science harness around them is not.
+
 ## Files
 
 Runnable prompts (verbatim, copy-paste; the NMR/LC-MS prompts are run with

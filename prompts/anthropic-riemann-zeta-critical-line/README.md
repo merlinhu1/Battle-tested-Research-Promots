@@ -63,6 +63,14 @@ Key techniques visible in the briefs:
   exceed it (the E2 agent claimed the unconditional ½ bound via a route the
   brief had not suggested).
 
+## Hidden context (not published)
+
+The transcript is the complete session export: every user message is
+published and the human inputs really were one-liners. Not in the export:
+the Claude Code harness system prompt, tool schemas, and the unreleased
+research model's configuration. Sub-agent briefs were written by the
+orchestrating Claude, not humans.
+
 ## Files
 
 Runnable prompts (verbatim, copy-paste):

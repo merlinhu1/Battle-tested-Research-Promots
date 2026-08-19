@@ -31,12 +31,18 @@ prompt as given.
 - **Scoped web use** — background literature only; no searching for the solution itself, and no
   declaring the problem open.
 
-## Hidden context (not published)
+## Hidden user prompts (unpublished)
 
-The task prompt above is complete as the user/agent message. It assumes
-OpenAI's internal "multiagent v2" orchestration (64 concurrent agents,
-agentic tooling), which is not public — a reproduction must supply an
-equivalent agent harness.
+The task prompt above is complete as the agent message. However, these
+user-authored inputs to the run were never published and are therefore
+missing here:
+
+- The harness **system prompt** of OpenAI's internal agent runtime.
+- The **"multiagent v2" orchestration configuration** (64-agent setup,
+  sub-agent briefs, tool schemas).
+
+A reproduction must supply equivalents; yield is not attributable to the
+task prompt alone.
 
 ## Files
 

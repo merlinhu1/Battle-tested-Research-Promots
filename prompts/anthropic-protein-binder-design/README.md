@@ -38,14 +38,21 @@ SCOPE is your task brief from your parent"), spend governors with hard
 ceilings, originality/novelty checks, counter-target selectivity requirements
 (GDF-8 vs. GDF-11), and verified-figure grounding.
 
-## Hidden context (not published)
+## Hidden user prompts (unpublished)
 
 Per the HF release, the campaign prompts assume the Claude Science agent
 harness (host.delegate, host.compute, submit_gate, wait_for_notification,
-Modal sandboxes, a Slack channel, a Drive deliverables folder) — "a public
-reader reproducing the campaign must supply equivalents." The harness system
-prompt and connectors are not published. The NMR/LC-MS prompts are the
-complete user messages; the Claude Science harness around them is not.
+Modal sandboxes, Slack, Drive) — "a public reader reproducing the campaign
+must supply equivalents." Unpublished user-authored context:
+
+- The **Claude Science harness system prompt** and tool/skill definitions.
+- Any **project instructions** (CLAUDE.md-equivalents) in the campaign
+  workspace.
+- The pre-approved network domains and connector configuration left by the
+  setup session.
+
+The NMR/LC-MS prompts are the complete user chat messages; the harness
+around them is not published.
 
 ## Files
 

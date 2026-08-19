@@ -9,7 +9,8 @@ significant, verified research results.
 All four requirements must hold for a prompt to enter this gallery:
 
 1. **The prompt is available** — released verbatim by its source (PDF,
-   dataset, or web page) and collected here as `.md`.
+   dataset, or web page) and collected here as a copy-paste-runnable `.md`
+   file.
 2. **It is related to a research task** — mathematics, science, or engineering
    discovery, not a demo or toy.
 3. **It is battle-tested** — actually used in the run that produced the
@@ -20,6 +21,13 @@ All four requirements must hold for a prompt to enter this gallery:
    concretely in every entry README.
 
 **Never include a prompt without a proven yield.**
+
+**Disclosure requirement:** every entry README carries a *Hidden user
+prompts* section listing the user-authored context that was NOT published —
+harness/system prompts, CLAUDE.md-style project instructions, skills, and
+tool configurations. These are prompts too; the published yield is not
+attributable to the released prompt files alone, and entries say so
+explicitly.
 
 ## The Gallery
 

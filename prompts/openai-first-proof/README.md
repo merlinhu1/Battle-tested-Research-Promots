@@ -31,3 +31,7 @@ and the templates are deliberately problem-independent.
 
 - [`prompt-templates.md`](prompt-templates.md) — Appendix A of the report
   (strategy + all four templates), machine-extracted from the source PDF.
+- [`problem-6-filled-prompt.md`](problem-6-filled-prompt.md) — the real
+  as-run prompt for Problem #6, reconstructed verbatim from the released
+  components (problem statement + solve template + the winning BSS seed idea),
+  plus all five generated ideas and the list of the other nine problems.

@@ -40,11 +40,17 @@ ceilings, originality/novelty checks, counter-target selectivity requirements
 
 ## Files
 
-- [`multi-target-prompt.md`](multi-target-prompt.md) — verbatim from the
-  HuggingFace release (CC-BY-4.0).
-- [`multi-target-kickoff.md`](multi-target-kickoff.md) — verbatim kickoff message.
-- [`single-target-kickoff.md`](single-target-kickoff.md) — verbatim kickoff message.
-- [`chemistry-prompts.md`](chemistry-prompts.md) — verbatim NMR / LC-MS prompts.
+Runnable prompts (verbatim, copy-paste; the NMR/LC-MS prompts are run with
+the raw instrument file attached):
+
+- [`multi-target-prompt.md`](multi-target-prompt.md) — the 14-target campaign
+  prompt, loaded as system context (verbatim from the HF release).
+- [`multi-target-kickoff.md`](multi-target-kickoff.md) — first user message,
+  multi-target campaign.
+- [`single-target-kickoff.md`](single-target-kickoff.md) — first user message,
+  single-target campaign.
+- [`prompt-nmr.md`](prompt-nmr.md) — raw NMR processing prompt.
+- [`prompt-lcms.md`](prompt-lcms.md) — raw LC-MS processing prompt.
 
 ## Further reading
 

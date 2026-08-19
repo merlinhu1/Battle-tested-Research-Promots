@@ -43,7 +43,21 @@ Notable techniques in the agent prompts:
 
 ## Files
 
-- [`agent-prompts.md`](agent-prompts.md) — Section 9 of the paper (all
-  specialized-agent prompt templates), machine-extracted from the arXiv PDF.
+Runnable prompt templates (verbatim, one per file; `{placeholders}` are filled
+by the orchestrator at runtime):
+
+- [`prompt-generation-literature-review.md`](prompt-generation-literature-review.md) — Generation agent
+- [`prompt-generation-debate.md`](prompt-generation-debate.md) — Generation agent (debate mode)
+- [`prompt-generation-observations.md`](prompt-generation-observations.md) — observations explained by a hypothesis
+- [`prompt-ranking-tournament.md`](prompt-ranking-tournament.md) — Ranking agent (pairwise comparison)
+- [`prompt-ranking-debate.md`](prompt-ranking-debate.md) — Ranking agent (simulated debate)
+- [`prompt-evolution-feasibility.md`](prompt-evolution-feasibility.md) — Evolution agent (feasibility improvement)
+- [`prompt-evolution-out-of-box.md`](prompt-evolution-out-of-box.md) — Evolution agent (out-of-the-box thinking)
+- [`prompt-meta-review.md`](prompt-meta-review.md) — Meta-review agent
+
+Reference:
+
+- [`agent-prompts.md`](agent-prompts.md) — Section 9 of the paper with all
+  templates in context (headings and provenance note included).
 - [`research-goals.md`](research-goals.md) — example research goals from
-  published, lab-validated runs.
+  published, lab-validated runs (the top-level prompts given by scientists).

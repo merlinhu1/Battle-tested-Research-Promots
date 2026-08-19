@@ -1,24 +1,3 @@
-<!--
-Machine-extracted from:
-https://cdn.openai.com/pdf/04d1d1e4-bc75-476a-97cf-49055cd98d31/cdc_prompt.pdf
-"PROMPT USED FOR A PROOF OF THE CYCLE DOUBLE COVER CONJECTURE" (OpenAI).
-Line-wrapping has been reflowed; wording is unchanged. Consult the PDF for exact typography.
--->
-
-PROMPT USED FOR “A PROOF OF THE CYCLE DOUBLE COVER
-
-CONJECTURE”
-
-OPENAI
-
-Abstract.
-
-This document contains the full prompt given to GPT 5.6 Sol Ultra which led to its proof of
-
-the Cycle Double Cover Conjecture.
-
-1. Prompt
-
 Current task statement
 
 A graph here is a finite loopless undirected multigraph: parallel edges are allowed and are

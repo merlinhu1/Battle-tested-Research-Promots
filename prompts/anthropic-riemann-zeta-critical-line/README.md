@@ -65,6 +65,14 @@ Key techniques visible in the briefs:
 
 ## Files
 
+Runnable prompts (verbatim, copy-paste):
+
+- [`prompt-1-launch.md`](prompt-1-launch.md) — the entire human launch prompt.
+- [`prompt-2-encouragement.md`](prompt-2-encouragement.md) — the follow-up
+  encouragement messages (variants were sent throughout the run).
+
+Reference:
+
 - [`transcript.md`](transcript.md) — machine-extracted text of Anthropic's
   published transcript PDFs ("How the one-half result was found" and "From one
   half to two thirds", ~466 KB). Prose is reliable; inline mathematics is

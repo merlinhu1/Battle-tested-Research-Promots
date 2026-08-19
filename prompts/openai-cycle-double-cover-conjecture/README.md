@@ -33,5 +33,8 @@ prompt as given.
 
 ## Files
 
-- [`prompt.md`](prompt.md) — the full prompt, machine-extracted from the source PDF (prose is
-  reliable; see the PDF for exact typography).
+- [`prompt.md`](prompt.md) — the full prompt, nothing else. Machine-extracted
+  from the source PDF and stripped of the PDF's title/abstract framing; the
+  file begins at the prompt's own "Current task statement" heading and ends at
+  the prompt's final line. Copy the whole file and send it as one message.
+  (The PDF's typography is authoritative for exact glyphs.)

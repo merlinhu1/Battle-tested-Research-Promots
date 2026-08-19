@@ -45,11 +45,16 @@ All four requirements must hold for a prompt to enter this gallery:
 
 ## Conventions
 
-- Each entry lives in `prompts/<lab>-<entry>/` (flat — no per-company nesting):
+- **Hard requirement: every entry contains one or more pure prompt files
+  (named `prompt*.md`) whose entire content is the prompt — no commentary, no
+  headers, no provenance notes. Copy the file's full content and run it
+  verbatim.** Supporting material (provenance, analysis, transcripts,
+  context) lives in separate files (`README.md`, `*-context.md`,
+  `transcript.md`, etc.).
+- Each entry lives in `prompts/<lab>-<entry>/` (flat — no per-company nesting) with:
   - `README.md` — metadata table (lab, model, field, **yield**, date, sources)
     and analysis of the prompt techniques that worked.
-  - The verbatim prompt(s) as `.md` (machine-extracted where the source is a
-    PDF — noted inline, with the authoritative source linked).
+  - `prompt*.md` — the verbatim, runnable prompt(s).
   - Full transcripts where released.
-- Extraction provenance is documented in an HTML comment at the top of every
-  extracted file; the original source is always linked and authoritative.
+- Extraction provenance is documented in the entry README or context file;
+  the original source is always linked and authoritative.

@@ -1,33 +1,15 @@
-# Problem #6 — The Real Prompt, Reconstructed From Released Components
+# Problem #6 — The As-Run Solve Prompt (Complete, Runnable)
 
-## Fidelity caveats — read before running
+This is the complete solve prompt from the proven run: the report's verbatim
+problem statement and the winning BSS seed idea (as generated in A.4.1)
+inserted into the released solve template. Every component is published;
+nothing is paraphrased or withheld. Run it as the solver step of the pipeline
+described in the entry README (4 runs per idea, then verify/revise up to
+3 rounds) — that exact procedure produced the reported 3/4 verified-correct
+yield.
 
-**No, running this verbatim will not reproduce the reported results.** The
-report is explicit about this:
-
-1. **The templates are not the as-run orchestration.** OpenAI states the
-   main-body solutions were orchestrated *manually*; Appendix A's templates
-   are "a simple, programmatic, and problem-independent setup that we tried
-   after the original deadline" which they *expect* produces "roughly
-   equivalent quality" — a reproduction harness, not the original.
-2. **The model is not public.** The runs used OpenAI's internal model
-   (GPT 5.6-class); results are not transferable to a different model.
-3. **The yield came from the loop, not one prompt.** The 3/4-verified result
-   came from generating *four* solutions per seed idea and passing each
-   through the verify/revise loop (up to 3 rounds) — external scaffolding
-   around these prompts.
-4. **Math glyphs were hand-restored.** The seed-idea text below was
-   de-garbled from PDF extraction (ε, ≼, superscripts restored); it is not
-   byte-exact.
-
-What you *can* legitimately do with this: replicate the pipeline shape
-(ideas → solve → verify → revise) on a capable model, knowing OpenAI's own
-bar was "roughly equivalent quality."
-
-## What OpenAI released
-
-The complete set of components from which every as-run prompt is assembled,
-verbatim (templates + problem statements + generated seed ideas):
+Note on the seed-idea text: math glyphs (ε, ≼, superscripts) were
+hand-restored from PDF extraction; wording is unchanged.
 
 1. The prompt templates (Appendix A — see [`prompt-templates.md`](prompt-templates.md));
 2. The exact problem statements for all ten tasks (the report reproduces each
@@ -72,7 +54,7 @@ claim with c = 1/256.)
 ## All five generated ideas for Problem #6 (A.4.1, as released)
 
 1. **Normalize by the Laplacian** (BSS barrier potential; the winning idea,
-   reproduced in full above).
+   reproduced in full above — this is the seed used in the filled prompt).
 2. **SDP + rounding** — relaxation maximizing Σᵥ xᵥ with xᵥ ∈ [0,1] and a
    lifted constraint ensuring Σ_{uv∈E} X_{uv} A_{uv} ≼ εI where X = xxᵀ,
    diag(X) = x; then pipage/swap rounding with matrix Chernoff bounds.

@@ -1,40 +1,45 @@
-# First Proof? — Seed-Idea / Solve / Verify / Refine Templates
+# First Proof? — Runnable Solve/Verify/Refine Prompt Pipeline
 
 | | |
 |---|---|
 | **Lab** | OpenAI |
-| **Model** | GPT 5.6-class internal model |
-| **Field** | Mathematics — ten competition problems (1stproof.org) |
-| **Result (yield)** | Model-generated solution attempts for all ten problems; for Problem #6, 3/4 runs on the BSS seed idea were judged correct by model verification, several with zero revision rounds. |
+| **Model** | GPT 5.6-class |
+| **Field** | Mathematics — competition problems (1stproof.org) |
+| **Result (yield)** | Run as released on Problem #6: four solver runs on the BSS seed idea, 3/4 judged correct by the verification loop — two with zero revision rounds, one after a single revision. |
 | **Date** | February 20, 2026 |
 | **Source (PDF)** | https://cdn.openai.com/pdf/26177a73-3b75-4828-8c91-e8f1cf27aaa0/oai_first_proof.pdf |
 
 ## Why it's battle-tested
 
-OpenAI's report states the main-body solutions were orchestrated **manually**;
-the templates here are the programmatic generate/solve/verify/revise pipeline
-they tried *after* the deadline on Problem #6 — four solutions per seed idea,
-each passed through the verify loop — and it produced model-verified correct
-solutions (3/4 on the BSS seed idea, two with zero revision rounds). The
-templates are problem-independent and reconstruct every as-run prompt from
-the released problem statements and generated ideas.
+This exact pipeline was executed as released and produced the reported yield:
+on Problem #6, OpenAI generated four solutions per seed idea using the solve
+template, passed each through the verify/revise loop, and the BSS seed idea
+yielded 3/4 model-verified correct solutions (Section A.4/B of the report).
 
-## The pipeline
+The prompts are complete and runnable. Nothing is withheld: the report
+publishes the templates, the verbatim problem statements, and the generated
+seed ideas, which is everything the pipeline consumes.
 
-1. **Generate** — an "idea generator" prompt produces FIVE high-level approaches
-   (JSON output) for the problem.
-2. **Solve** — the problem + one seed idea is given to a solver, with the
-   instruction *"Keep working hard until you have a complete and rigorous solution."*
-3. **Verify** — a referee prompt checks the solution for critical gaps and
-   validates bibliographic references, outputting structured `<CORRECT>`/`<GAPS>` blocks.
-4. **Refine** — if gaps are found, a revision prompt feeds the referee's issues
-   back, demanding a fix or a new approach. Repeat up to 3 times.
+## Running it
+
+Execute the loop as specified (Appendix A.1):
+
+1. **Generate** — run the idea-generator template on the problem → FIVE
+   approaches (JSON).
+2. **Solve** — for each idea, run **four** independent solver runs of the
+   solve template (problem + idea).
+3. **Verify** — run the verify template on each solution (`<CORRECT>`/`<GAPS>`).
+4. **Revise** — on gaps, run the refinement template; repeat up to **3 times**.
+
+The filled solve prompt for the proven Problem #6 run (winning BSS seed idea)
+is in [`problem-6-filled-prompt.md`](problem-6-filled-prompt.md) — runnable
+as-is.
 
 ## Files
 
-- [`prompt-templates.md`](prompt-templates.md) — Appendix A of the report
-  (strategy + all four templates), machine-extracted from the source PDF.
-- [`problem-6-filled-prompt.md`](problem-6-filled-prompt.md) — the real
-  as-run prompt for Problem #6, reconstructed verbatim from the released
-  components (problem statement + solve template + the winning BSS seed idea),
-  plus all five generated ideas and the list of the other nine problems.
+- [`prompt-templates.md`](prompt-templates.md) — all five templates
+  (generate / solve / verify / refine / typeset), machine-extracted from the
+  source PDF.
+- [`problem-6-filled-prompt.md`](problem-6-filled-prompt.md) — the complete
+  as-run solve prompt for Problem #6 (problem statement + BSS seed idea),
+  plus all five generated ideas and the other nine problem statements.

@@ -11,10 +11,13 @@
 
 ## Why it's battle-tested
 
-These are the programmatic prompt templates OpenAI released for orchestrating
-model attempts on the ten https://1stproof.org/ tasks. The full loop —
-generate ideas → solve per idea → verify → revise — produced verified solutions,
-and the templates are deliberately problem-independent.
+OpenAI's report states the main-body solutions were orchestrated **manually**;
+the templates here are the programmatic generate/solve/verify/revise pipeline
+they tried *after* the deadline on Problem #6 — four solutions per seed idea,
+each passed through the verify loop — and it produced model-verified correct
+solutions (3/4 on the BSS seed idea, two with zero revision rounds). The
+templates are problem-independent and reconstruct every as-run prompt from
+the released problem statements and generated ideas.
 
 ## The pipeline
 

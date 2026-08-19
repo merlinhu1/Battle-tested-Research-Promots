@@ -29,9 +29,6 @@ binders that match or beat expert human designs.
   clock definition (T0 + 48 h), and "Do not ask me any questions or wait for
   approval."
 - **`single-target-kickoff.md`** — the 24-hour, $10k single-target variant.
-- **`chemistry-prompts.md`** — the two-sentence NMR and LC-MS prompts from the
-  companion analytical-chemistry result (Opus 5 matched the contract lab's
-  analysis in 23 and 19 minutes).
 
 Notable techniques: explicit sub-agent scope discipline ("your authoritative
 SCOPE is your task brief from your parent"), spend governors with hard
@@ -51,13 +48,20 @@ must supply equivalents." Unpublished user-authored context:
 - The pre-approved network domains and connector configuration left by the
   setup session.
 
-The NMR/LC-MS prompts are the complete user chat messages; the harness
-around them is not published.
+The campaign and kickoff prompts above are, however, the complete published
+instruction set — the substantive campaign specification is fully in hand.
+
+## Excluded from this entry
+
+The companion analytical-chemistry prompts (two-sentence NMR / LC-MS
+messages from the same announcement) were removed: their yield is
+attributable almost entirely to the unpublished Claude Science harness and
+skills, not to the published one-liners. Same character as the deleted
+Riemann-zeta entry (see root README).
 
 ## Files
 
-Runnable prompts (verbatim, copy-paste; the NMR/LC-MS prompts are run with
-the raw instrument file attached):
+Runnable prompts (verbatim, copy-paste):
 
 - [`multi-target-prompt.md`](multi-target-prompt.md) — the 14-target campaign
   prompt, loaded as system context (verbatim from the HF release).
@@ -65,8 +69,6 @@ the raw instrument file attached):
   multi-target campaign.
 - [`single-target-kickoff.md`](single-target-kickoff.md) — first user message,
   single-target campaign.
-- [`prompt-nmr.md`](prompt-nmr.md) — raw NMR processing prompt.
-- [`prompt-lcms.md`](prompt-lcms.md) — raw LC-MS processing prompt.
 
 ## Further reading
 

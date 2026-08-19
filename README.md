@@ -22,12 +22,21 @@ All four requirements must hold for a prompt to enter this gallery:
 
 **Never include a prompt without a proven yield.**
 
-**Disclosure requirement:** every entry README carries a *Hidden user
-prompts* section listing the user-authored context that was NOT published —
-harness/system prompts, CLAUDE.md-style project instructions, skills, and
-tool configurations. These are prompts too; the published yield is not
-attributable to the released prompt files alone, and entries say so
-explicitly.
+**Usability requirement:** the published prompt must carry the causal weight
+of the yield. Entries whose published prompts are one-liners (or otherwise
+insubstantial) while the actual instructions lived in undisclosed harness
+system prompts, skills, or project instructions are **unusable** and are
+excluded — this repository collects useful prompts, not exercises in
+reverse-engineering hidden context. Every entry README still discloses
+whatever user-authored context remains unpublished (harness configs, tool
+schemas) so yields are never overstated.
+
+## Rejected entries
+
+| Candidate | Rejected because |
+|---|---|
+| Anthropic — Riemann zeta 67.2% critical-line bound (Aug 10, 2026) | Has hidden, undiscoverable user prompts: the published human inputs are one-liners ("Take a real stab at the Riemann hypothesis", "Keep going / Believe in yourself"); the yield derives from an unreleased research model's hidden harness system prompt, skills, and CLAUDE.md-style instructions. Unusable — deleted. |
+| Anthropic — NMR / LC-MS analytical-chemistry one-liners (Aug 18, 2026) | Same character: two-sentence prompts whose yield is attributable to the unpublished Claude Science harness and skills. Deleted from the protein-design entry. |
 
 ## The Gallery
 
@@ -42,8 +51,7 @@ explicitly.
 
 | Entry | Field | Yield | Date |
 |---|---|---|---|
-| [Riemann zeta — 67.2% critical-line bound](prompts/anthropic-riemann-zeta-critical-line/) | Analytic number theory | Lower bound on zeros of ζ on the critical line improved from 41.6% to 67.2%; Lean-formalized; expert-reviewed. Launched by a one-line human prompt ("Take a real stab at the Riemann hypothesis") + full sub-agent transcripts | Aug 10, 2026 |
-| [De novo protein binder design campaign](prompts/anthropic-protein-binder-design/) | Computational biology | Wet-lab-confirmed binders against 14/15 targets; 22–35% hit rates vs. 10–15% human baseline; state-of-the-art affinities. ~30k-token autonomous campaign prompt + kickoff messages + 2-sentence chemistry prompts | Aug 18, 2026 |
+| [De novo protein binder design campaign](prompts/anthropic-protein-binder-design/) | Computational biology | Wet-lab-confirmed binders against 14/15 targets; 22–35% hit rates vs. 10–15% human baseline; state-of-the-art affinities. ~30k-token autonomous campaign prompt + kickoff messages | Aug 18, 2026 |
 
 ### Google DeepMind / Google Research
 

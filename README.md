@@ -4,19 +4,22 @@ An elegant, curated gallery of research prompts with **proven yield** — the
 actual prompts (and full transcripts) that frontier AI labs released alongside
 significant, verified research results.
 
-## Inclusion criteria (firm)
+## Yield criteria (firm)
 
-A prompt enters this gallery only if:
+All four requirements must hold for a prompt to enter this gallery:
 
-1. **The prompt is available** — published/released verbatim (PDF, dataset, or
-   page) and collected here as `.md`.
-2. **It targets a research task** — mathematics, science, or engineering
-   discovery, not a demo.
-3. **It is battle-tested with proven yield** — it produced a significant,
-   independently validated result in its field (published paper, wet-lab
-   validation, formal verification, or expert-reviewed proof).
+1. **The prompt is available** — released verbatim by its source (PDF,
+   dataset, or web page) and collected here as `.md`.
+2. **It is related to a research task** — mathematics, science, or engineering
+   discovery, not a demo or toy.
+3. **It is battle-tested** — actually used in the run that produced the
+   result, not a post-hoc reconstruction.
+4. **It produced significant yield in its field** — a result independently
+   validated by publication in a peer-reviewed venue, wet-lab confirmation,
+   formal verification (e.g. Lean), or expert review. The yield is stated
+   concretely in every entry README.
 
-No prompt without a proven yield is ever included.
+**Never include a prompt without a proven yield.**
 
 ## The Gallery
 

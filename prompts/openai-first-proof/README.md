@@ -32,14 +32,17 @@ Execute the loop as specified (Appendix A.1):
 4. **Revise** — on gaps, run the refinement template; repeat up to **3 times**.
 
 The filled solve prompt for the proven Problem #6 run (winning BSS seed idea)
-is in [`problem-6-filled-prompt.md`](problem-6-filled-prompt.md) — runnable
-as-is.
+is in [`problem-6-prompt.md`](problem-6-prompt.md) — copy the file's entire
+content and run it as-is.
 
 ## Files
 
+- [`problem-6-prompt.md`](problem-6-prompt.md) — the complete as-run solve
+  prompt for the proven Problem #6 run. Contains **only the prompt**: copy
+  the whole file and send it as one message.
 - [`prompt-templates.md`](prompt-templates.md) — all five templates
   (generate / solve / verify / refine / typeset), machine-extracted from the
   source PDF.
-- [`problem-6-filled-prompt.md`](problem-6-filled-prompt.md) — the complete
-  as-run solve prompt for Problem #6 (problem statement + BSS seed idea),
-  plus all five generated ideas and the other nine problem statements.
+- [`problem-6-context.md`](problem-6-context.md) — how the prompt was
+  assembled, the yield it produced, all five generated seed ideas, and the
+  other nine problem statements.

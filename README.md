@@ -50,11 +50,3 @@ No prompt without a proven yield is ever included.
   - Full transcripts where released.
 - Extraction provenance is documented in an HTML comment at the top of every
   extracted file; the original source is always linked and authoritative.
-- See [CONTRIBUTING.md](CONTRIBUTING.md) for how to add entries.
-
-## License notes
-
-- Anthropic protein-design prompts: CC-BY-4.0 (HuggingFace release).
-- Co-Scientist paper text: CC-BY-4.0 (arXiv).
-- OpenAI PDFs and Anthropic zeta materials: extracted and quoted here with
-  attribution and links to the authoritative sources.

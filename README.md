@@ -37,6 +37,7 @@ schemas) so yields are never overstated.
 |---|---|
 | Anthropic — Riemann zeta 67.2% critical-line bound (Aug 10, 2026) | Has hidden, undiscoverable user prompts: the published human inputs are one-liners ("Take a real stab at the Riemann hypothesis", "Keep going / Believe in yourself"); the yield derives from an unreleased research model's hidden harness system prompt, skills, and CLAUDE.md-style instructions. Unusable — deleted. |
 | Anthropic — NMR / LC-MS analytical-chemistry one-liners (Aug 18, 2026) | Same character: two-sentence prompts whose yield is attributable to the unpublished Claude Science harness and skills. Deleted from the protein-design entry. |
+| OpenAI — Graviton amplitudes ("Extending single-minus amplitudes to gravitons", Mar 4, 2026) | No prompt was ever published: the preprint and announcement describe GPT-5.2 Pro + an internal model playing "a significant role at all stages" but release no prompts, transcripts, or harness details. Fails criterion 1 (prompt available). |
 
 ## The Gallery
 
@@ -52,6 +53,13 @@ schemas) so yields are never overstated.
 | Entry | Field | Yield | Date |
 |---|---|---|---|
 | [De novo protein binder design campaign](prompts/anthropic-protein-binder-design/) | Computational biology | Wet-lab-confirmed binders against 14/15 targets; 22–35% hit rates vs. 10–15% human baseline; state-of-the-art affinities. ~30k-token autonomous campaign prompt + kickoff messages | Aug 18, 2026 |
+| [Automated W2S researcher](prompts/anthropic-automated-w2s-researcher/) | AI alignment research | 9 parallel Claude Opus 4.6 agents reached PGR 0.97 vs. 0.23 human baseline on weak-to-strong supervision. Full prompt stack published (system prompt + skill + critic prompts, MIT) | Apr 14, 2026 |
+
+### Academic / other labs
+
+| Entry | Field | Yield | Date |
+|---|---|---|---|
+| [SPARK — System of Pathology Agents](prompts/spark-pathology-agents/) | Cancer pathology | Nature Medicine: autonomous hypothesis→code→validation pipeline produced survival-validated prognostic biomarkers on real patient cohorts. Full CrewAI agent/task prompts published | Apr 29, 2026 |
 
 ### Google DeepMind / Google Research
 

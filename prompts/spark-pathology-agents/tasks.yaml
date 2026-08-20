@@ -1,0 +1,1913 @@
+idea_generation_B:
+  description: >
+    We have cohorts of patients with malignant tumors, specifically focused
+    on a cohort of patients with {cancer_type}. For this cohort, we have access to 
+    digitized whole-slide images of tumor sections stained with Hematoxylin & Eosin 
+    (H&E) only. No additional immunohistochemistry, gene expression, or sequencing data 
+    is available, and we cannot validate with public datasets.
+    
+    Two main types of processed data are available:
+
+    1) Tissue Segmentation Masks: A high-precision, pixel-wise, multi-class tissue
+    segmentation algorithm was employed to generate masks for these slides. 
+    Each pixel in these masks corresponds to a tissue class (integer-coded). Only two tumor-associated 
+    classes—epithelial tumor compartment (i.e., tumor cells) and tumor stroma compartment—were retained; 
+    all other classes, including background, are masked (pixel value of 0). Tissue segmentation 
+    masks cannot be analysed separately and were only used to define in which compartment (epithelial
+    tumor compartment or tumor stroma compartment) each single cell is located. 
+
+    2) Single-Cell Detection & Classification: A second algorithm was employed to detect and classify
+    all cells within epithelial and stromal tumor compartments. Cells detected outside these regions 
+    (e.g., in necrotic debris, mucin, or tertiary lymphoid structures) were excluded. Detected cell nuclei 
+    are stored as polygons in a GeoJSON file with single cell type classifications as follows:
+
+        - Tumor cells
+        - Lymphocytes
+        - Plasma cells
+        - Macrophages
+        - Neutrophilic granulocytes
+        - Eosinophilic granulocytes
+        - Connective tissue cells (primarily cancer-associated fibroblasts)
+    
+    This data enables both feature extraction at the single-cell level and analysis of spatial relationships 
+    among different cell types.
+
+    **Instructions**:
+  
+    - You are prompted to generate ideas that explore methods and hypotheses to
+      analyse the cells mentioned above for predicting patient survival or tumor progression. 
+    - Each idea can involve one (e.g., only tumor cells or only lymphocytes) or multiple cell types
+      (e.g., tumor cells + lymphocytes + macrophages). The example of most advanced constellation concerning
+      number of cell types involved in an idea is an idea building a parameter involving all seven cell types.
+    - One idea is always only one resulting parameter.
+    - When proposing ideas that involve morphometric parameters, focus on one specific parameter for 
+      each idea. For example, instead of saying “analyze cell nuclei parameters,” specify a single parameter 
+      like “analyze the maximal axis length of cell nuclei” or “analyze the area of cell nuclei.” 
+      These examples are abstract and meant to illustrate the principle of concentrating on one parameter 
+      when discussing morphometry, regardless of the specific cell type(s) involved.
+    - Ensure that each idea is as concrete and detailed as possible. Avoid abstractions and generalizations. 
+      Provide clear, specific formulations that leave no room for ambiguity.
+    - Consider the meaningful cytological features for the cells of a single type that can be extracted from the polygons.
+    - Consider that the GeoJSON files with single-cell detections and classifications are associated with the original H&E-stained images. 
+      This means that additional features for single cells can be extracted from the H&E images since the 
+      coordinates of their locations are known (polygons in the GeoJSON files).
+    - Even if we have only one time point in our data, ideas involving temporal aspect are still possible. Consider, 
+      that different regions within single tumors are sub-clones that evolved from ancestor cell populations and, therefore, 
+      represent indirectly a temporal dimension in our data. 
+   
+    **Definitions for output**:
+    
+    - **Idea title**: should clearly explain the parameter and involved cell types as this will be used later
+      for duplicate detection.
+    
+    - **Cell type code**: Single code for cells involved in idea.
+      - Use following abbreviations:
+            T: tumor cells
+            L: lymphocytes
+            P: plasma cells
+            M: macrophages 
+            N: Neutrophilic granulocytes
+            E: Eosinophilic granulocytes
+            F: Connective tissue cells (primarily cancer-associated fibroblasts)
+      - To generate a single code for output field "cell_type_code" use following principle:
+            E.g., idea involves only lymphocytes. Code: "L".
+            E.g., idea involves tumor cells, macrophages, and plasma cells. Code: "TMP".
+    
+    - **Estimated Complexity**: Rate the complexity of implementing the idea on a scale of 0 to 10. 
+      - *0* means minimal complexity, with straightforward calculations or analyses.
+      - *10* indicates high complexity, requiring advanced modeling or multiple processing steps.
+      - Consider factors such as the data preparation involved, analytical difficulty,
+        Python script programming, and computational resources required.
+    
+    - **Parameter Type**: Specify the type of primary data or feature used in the analysis.
+      - *Cell Counting*: Focuses on counting cell types, such as the number or proportion of certain cells.
+      - *Spatial*: Relies on spatial features like cell proximity, density, or patterns of cell clustering.
+      - *Other*: Encompasses additional features.
+    
+    - **Analysis Principle**: Describe the general approach needed for the analysis.
+      - *Direct Measurement*: Involves straightforward, raw data analyses without complex transformations.
+      - *Modelling Easy*: Requires modeling, but it is relatively simple (e.g., linear models, etc.).
+      - *Modelling Hard*: Involves advanced or multi-step modeling (e.g., deep learning models, 
+        cellular automata, complex multi-variable relationships, probabilistic models, etc.).
+    
+    **Titles of ideas already present in the database**
+    
+    {titles_existing_ideas_in_db}
+    
+    
+    **Your Task**:
+    
+    -Generate {number_ideas} {idea_quality} ideas that explore methods and hypotheses to
+     analyse these cells for predicting patient survival or tumor progression.
+    -When generating ideas, you are free to choose any of the seven above mentioned cell types.
+     However, each generated idea must involve {number_cell_types} distinct cell type(s).
+     Choice of cell type(s) is at your discretion. 
+    -Your ideas must not duplicate or significantly overlap with titles/ideas already in the database.
+    -Each proposed idea should be directly related to the goal of understanding or predicting 
+     patient survival or tumor progression.
+    -Use existing ideas in the database to guide the discovery process systematically. 
+    
+
+  expected_output: >
+    Provide a JSON-formatted list of ideas. Each idea should contain following parameters 
+    (use the names of parameters exactly as defined below):
+    
+        - idea_number
+        - idea_title
+        - cancer_type: {cancer_type}
+        - cell_type_code: (single code for cell types involved in idea)
+        - biological_hypothesis
+        - analytical_methodological_implementation
+        - estimated_complexity: (0..10)
+        - parameter_type: (e.g., cell counting, spatial, other)
+        - analysis_principle: (e.g., direct measurement, modelling easy, modelling hard)
+    
+    **Rules:**
+
+    - **No text, explanations, or comments are allowed outside the JSON object.**
+    - Output must be a valid JSON list. Any deviation is not acceptable.
+    - **ALWAYS** start numbering from idea_number 1 in the JSON, even if some ideas already exist in the database.
+    - Note! Each generated idea must involve {number_cell_types} distinct cell type(s).
+  
+  
+idea_generation_C:
+  description: >
+    We have cohorts of patients with malignant tumors, specifically focused
+    on a cohort of patients with {cancer_type}. For this cohort, we have access to 
+    digitized whole-slide images of tumor sections stained with Hematoxylin & Eosin 
+    (H&E) only. No additional immunohistochemistry, gene expression, or sequencing data 
+    is available, and we cannot validate with public datasets.
+    
+    Two main types of processed data are available:
+
+    1) Tissue Segmentation Masks: A high-precision, pixel-wise, multi-class tissue
+    segmentation algorithm was employed to generate masks for these slides. 
+    Each pixel in these masks corresponds to a tissue class (integer-coded). Only two tumor-associated 
+    classes—epithelial tumor compartment (i.e., tumor cells) and tumor stroma compartment—were retained; 
+    all other classes, including background, are masked (pixel value of 0). Tissue segmentation 
+    masks cannot be analysed separately and were only used to define in which compartment (epithelial
+    tumor compartment or tumor stroma compartment) each single cell is located. 
+
+    2) Single-Cell Detection & Classification: A second algorithm was employed to detect and classify
+    all cells within epithelial and stromal tumor compartments. Cells detected outside these regions 
+    (e.g., in necrotic debris, mucin, or tertiary lymphoid structures) were excluded. Detected cell nuclei 
+    are stored as polygons in a GeoJSON file with single cell type classifications as follows:
+
+        - Tumor cells
+        - Lymphocytes
+        - Plasma cells
+        - Macrophages
+        - Neutrophilic granulocytes
+        - Eosinophilic granulocytes
+        - Connective tissue cells (primarily cancer-associated fibroblasts)
+    
+    This data enables both feature extraction at the single-cell level and analysis of spatial relationships 
+    among different cell types.
+    
+    **OBJECTIVE**
+      Malignant tumors are lethal primarily because they metastasize. Once a tumor has spread to distant sites, 
+      surgical resection alone can no longer prevent eventual fatality. However, if the tumor remains localized 
+      and has not yet metastasized, surgical removal can be curative. For carcinomas (epithelial malignant tumors), 
+      the most common route of metastasis is through lymphatic vessels into regional lymph nodes.
+    
+      Therefore, the key challenge is to determine which tumors have already metastasized and which have not. 
+      The objective is to identify specific morphological features and the underlying biological mechanisms that can
+      reliably indicate whether a carcinoma has metastasized.
+        
+    **Instructions: conceptual**:
+  
+    - You are prompted to generate ideas that explore methods and hypotheses to
+      analyse the cells mentioned above in order to predict if a tumor has metastasized.
+    - Your ideas may focus on just one cell type (e.g., tumor cells alone) or multiple cell types (e.g., tumor cells + lymphocytes + macrophages).
+    - The most comprehensive approach might incorporate all seven cell types under consideration.
+    - Consider the cellular dynamics and interactions among different cell types that enable tumor cells to enter 
+      lymphatic vessels and spread to lymph nodes.
+    - Analysis of tumor cell microenvironment might provide essential clues to metastatic behaviour.
+    - Bear in mind the high heterogeneity of malignant tumors, which can evolve into multiple subclones with varying 
+      aggressiveness. These subclones compete, adapt, and cooperate.
+    - Often, only a small part of the tumor acquires the features necessary for metastatic spread.
+    - These features may be evident in one focal area of the tumor (unifocal) or in multiple areas simultaneously (multifocal).
+    - Think about key signaling pathways (e.g., angiogenesis, stroma induction, immune escape) and how these affect 
+      cellular morphology and spatial organization of the cells in context of metastatic spread. 
+    
+    **Instructions: methodology**:
+    
+    - One idea is always only one resulting parameter.
+    - Ensure that each idea is as concrete and detailed as possible. Avoid abstractions and generalizations. 
+      Provide clear, specific formulations that leave no room for ambiguity.
+    - Consider the meaningful cytological features for the cells of a single type that can be extracted from the polygons.
+    - Consider that the GeoJSON files with single-cell detections and classifications are associated with the original H&E-stained images. 
+      This means that additional features for single cells can be extracted from the H&E images since the 
+      coordinates of their locations are known (polygons in the GeoJSON files).
+    - Even if we have only one time point in our data, ideas involving temporal aspect are still possible. Consider, 
+      that different regions within single tumors are sub-clones that evolved from ancestor cell populations and, therefore, 
+      represent indirectly a temporal dimension in our data. 
+    - Consider, that we cannot analyse vessels or endothelial cells, only fibroblasts in stroma.
+   
+    **Definitions for output**:
+    
+    - **Idea title**: should clearly explain the idea/parameter and involved cell types as this will be used later
+      for duplicate detection.
+    
+    - **Cell type code**: Single code for cells involved in idea.
+      - Use following abbreviations:
+            T: tumor cells
+            L: lymphocytes
+            P: plasma cells
+            M: macrophages 
+            N: Neutrophilic granulocytes
+            E: Eosinophilic granulocytes
+            F: Connective tissue cells (primarily cancer-associated fibroblasts)
+      - To generate a single code for output field "cell_type_code" use following principle:
+            E.g., idea involves only lymphocytes. Code: "L".
+            E.g., idea involves tumor cells, macrophages, and plasma cells. Code: "TMP".
+    
+    - **Estimated Complexity**: Rate the complexity of implementing the idea on a scale of 0 to 10. 
+      - *0* means minimal complexity, with straightforward calculations or analyses.
+      - *10* indicates high complexity, requiring advanced modeling or multiple processing steps.
+      - Consider factors such as the data preparation involved, analytical difficulty,
+        Python script programming, and computational resources required.
+    
+    - **Parameter Type**: Specify the type of primary data or feature used in the analysis.
+      - *Cell Counting*: Focuses on counting cell types, such as the number or proportion of certain cells.
+      - *Spatial*: Relies on spatial features like cell proximity, density, or patterns of cell clustering.
+      - *Other*: Encompasses additional features.
+    
+    - **Analysis Principle**: Describe the general approach needed for the analysis.
+      - *Direct Measurement*: Involves straightforward, raw data analyses without complex transformations.
+      - *Modelling Easy*: Requires modeling, but it is relatively simple (e.g., linear models, etc.).
+      - *Modelling Hard*: Involves advanced or multi-step modeling (e.g., deep learning models, 
+        cellular automata, complex multi-variable relationships, probabilistic models, etc.).
+    
+    **Titles of ideas already present in the database**
+    
+    {titles_existing_ideas_in_db}
+    
+    
+    **Your Task**:
+    
+    -Generate {number_ideas} {idea_quality} ideas that explore methods and hypotheses to
+     analyse the above mentioned seven cell types for predicting if a malignant tumor has metastasized.
+    -When generating ideas/parameters, you are free to choose any of the seven above mentioned cell types.
+    -Your ideas may focus on just one cell type (e.g., tumor cells alone) or multiple cell types (e.g., tumor cells + lymphocytes + macrophages).
+    -Your ideas must not duplicate or significantly overlap with titles/ideas already in the database.
+    -Each proposed idea should be directly related to the goal of understanding or predicting 
+     metastatic spread.
+    -Use existing ideas in the database to guide the discovery process systematically. 
+
+  expected_output: >
+    Provide a JSON-formatted list of ideas. Each idea should contain following parameters 
+    (use the names of parameters exactly as defined below):
+    
+        - idea_number
+        - idea_title
+        - cancer_type: {cancer_type}
+        - cell_type_code: (single code for cell types involved in idea)
+        - biological_hypothesis
+        - analytical_methodological_implementation
+        - estimated_complexity: (0..10)
+        - parameter_type: (e.g., cell counting, spatial, other)
+        - analysis_principle: (e.g., direct measurement, modelling easy, modelling hard)
+    
+    **Rules:**
+
+    - **No text, explanations, or comments are allowed outside the JSON object.**
+    - Output must be a valid JSON list. Any deviation is not acceptable.
+
+idea_generation_D:
+  description: >
+    **Description of available data**
+    
+      *Cohort and tissue microarray*
+      
+      We have cohorts of patients with malignant tumors, specifically focused
+      on a cohort of patients with {cancer_type}. For this cohort a tissue microarray (TMA) was 
+      constructed from tumor tissue. Each tumor is a primary tumor, not metastasis. This TMA usually 
+      includes one tissue spot for each tumor.
+      
+      *Image acquisition*
+      
+      This TMA was analysed using multiplexed imaging with a panel that includes multiple markers allowing
+      the differentiation between different cell populations. 
+      
+      The images were later digitized and preprocessed to map different cell types. Here are several abstract examples:
+      -A cell expresses pan-cytokeratin - this is a tumor cell. 
+      -A cell expresses CD3 and CD8 - this is cytotoxic T-lymphocyte.
+      
+      *Data modalities*
+      
+      No additional gene expression or sequencing data is available, and we cannot validate with public datasets.
+      
+      Two main types of processed data are available:
+    
+      1) Tissue Structure Segmentation Masks. Several types of tissue structures are available from image analysis:
+          - Vessels (can be analysed directly)
+          - Epithelial structures (cannot be analysed directly, but were used to classify the position of single cells)
+      
+      2) Single-Cell Detection & Classification Masks. Based on expression patterns several types of cells were detected
+      and classified in the images. All cells were processed in each image. Following cell types are present in the masks:
+          - Tumor cells: epithelial tumor cells
+          - Cytotoxic T lymphocytes: CD8+ T lymphocytes
+          - Helper T lymphocytes: CD4+/FOXP3- T lymphocytes
+          - Regulatory T lymphocytes: CD4+/FOXP3+ T lymphocyte
+          - B Lymphocytes
+          - Plasma cells
+          - Macrophages
+          - Granulocytes: eosinophilic and neutrophilic granulocytes together
+          - Myofibroblasts PDPN+
+          - Myofibroblasts: all other, PDPN-
+          - Fibroblasts FSP1+
+          - Fibroblasts: all other, FSP1-
+          - Endothelial cells
+          - Antigen presenting cells (APC)
+      
+      Note: a) Cells where exact classification was not possible are masked and not relevant for your task. b) both vessel masks 
+      and single-cell detection & classification masks are stored in one GeoJSON file as polygons. c) The detection of the cells 
+      is based on the nucleus, and polygons in GeoJSON file represent nuclei. d) For each cell (based on the above mentioned
+      mapping of epithelial structures) is known if it resides within epithelial or stromal compartment. 
+      e) PDPN+ (Podoplanin) myofibroblasts are a subset of myofibroblasts that were associated with tumor progression,
+      vessel invasion, and other negative events in malignant epithelial tumors. f) FSP1+ fibroblasts are a subset
+      of fibroblasts associated with inflammation, tissue remodelling, epithelial-to-mesenchymal transition of cells,
+      and some other processes, presumably contributing to tumor progression.
+      
+      *Analysis possibilities*
+      
+      This data enables both feature extraction at the single-cell level and analysis of spatial relationships 
+      among different cell types and tissue structures.
+
+    **Instructions**
+  
+    - You are prompted to generate ideas that explore methods and hypotheses to
+      analyse the cells and/or tissue structures mentioned above for predicting patient survival or tumor progression. 
+    - Each idea can involve one (e.g., only tumor cells or only lymphocytes) or multiple cell types
+      (e.g., tumor cells + cytotoxic T lymphocytes + macrophages). The example of most advanced constellation concerning
+      number of cell types involved in an idea is an idea building a parameter involving all fourteen cell types.
+    - Each idea might or might not (then analysing only cells) use abovementioned tissue structures.
+    - Some cells stem from one cell type (for example, PDPN+ myofibroblasts and other myofibroblasts) and might be merged 
+      if necessary for analysis. 
+    - One idea is always only one resulting parameter.
+    - When proposing ideas that involve morphometric parameters, focus on one specific parameter for 
+      each idea. For example, instead of saying “analyze cell nuclei parameters,” specify a single parameter 
+      like “analyze the maximal axis length of cell nuclei” or “analyze the area of cell nuclei.” 
+      These examples are abstract and meant to illustrate the principle of concentrating on one parameter 
+      when discussing morphometry, regardless of the specific cell type(s) involved.
+    - Ensure that each idea is as concrete and detailed as possible. Avoid abstractions and generalizations. 
+      Provide clear, specific formulations that leave no room for ambiguity.
+    - Consider the meaningful cytological features for the cells of a single type that can be extracted from the polygons.
+    - Consider that the GeoJSON files are not associated with the original H&E-stained images or multiplexed images. 
+      This means that no additional features for single cells can be extracted from such images. You work only with 
+      GeoJSONs.
+    
+    **Definitions for output**
+    
+    - **Idea title**: should clearly explain the parameter and involved cell types as this will be used later
+      for duplicate detection.
+    
+    - **Cell type code**: Single code for cells involved in idea.
+      - Use following abbreviations:
+            TU: Tumor cells
+            Tc: Cytotoxic T lymphocytes
+            Th: Helper T lymphocytes
+            Treg: Regulatory T lymphocytes
+            B: B Lymphocytes
+            P: Plasma cells
+            M: Macrophages
+            G: Granulocytes
+            MFp: Myofibroblasts PDPN+
+            MF: Myofibroblasts - all other, PDPN-
+            Ff: Fibroblasts FSP1+
+            F: Fibroblasts - all other, FSP1-
+            E: Endothelial cells
+            A: Antigen presenting cells (APC)
+  
+      - To generate a single code for output field "cell_type_code" use following principle:
+            E.g., idea involves only B lymphocytes. Code: "B".
+            E.g., idea involves tumor cells, macrophages, plasma cells, and FSP1+ fibroblasts. Code: "TU,M,P,Ff".
+    
+    - **Estimated Complexity**: Rate the complexity of implementing the idea on a scale of 0 to 10. 
+      - *0* means minimal complexity, with straightforward calculations or analyses.
+      - *10* indicates high complexity, requiring advanced modeling or multiple processing steps.
+      - Consider factors such as the data preparation involved, analytical difficulty,
+        Python script programming, and computational resources required.
+    
+    - **Parameter Type**: Specify the type of primary data or feature used in the analysis.
+      - *Cell Counting*: Focuses on counting cell types, such as the number or proportion of certain cells.
+      - *Spatial*: Relies on spatial features like cell proximity, density, or patterns of cell clustering.
+      - *Other*: Encompasses additional features.
+    
+    - **Analysis Principle**: Describe the general approach needed for the analysis.
+      - *Direct Measurement*: Involves straightforward, raw data analyses without complex transformations.
+      - *Modelling Easy*: Requires modeling, but it is relatively simple (e.g., linear models, etc.).
+      - *Modelling Hard*: Involves advanced or multi-step modeling (e.g., deep learning models, 
+        cellular automata, complex multi-variable relationships, probabilistic models, etc.).
+    
+    **Titles of ideas already present in the database**
+    
+    {titles_existing_ideas_in_db}
+    
+    **Your Task**:
+    
+    -Generate {number_ideas} {idea_quality} ideas that explore methods and hypotheses to
+     analyse these cells for predicting patient survival or tumor progression.
+    -When generating ideas, you are free to choose any of the fourteen above mentioned cell types.
+     However, each generated idea must involve exactly {number_cell_types} distinct cell type(s).
+     Choice of cell type(s) is at your discretion. Vessels as analytical object are allowed to be used 
+     in any idea independent of pre-defined number of distinct cell types involved.  
+    -Your ideas must not duplicate or significantly overlap with titles/ideas already in the database.
+    -Each proposed idea should be directly related to the goal of understanding or predicting 
+     patient survival or tumor progression.
+    -Use existing ideas in the database to guide the discovery process systematically. 
+    
+
+  expected_output: >
+    Provide a JSON-formatted list of ideas. Each idea should contain following parameters 
+    (use the names of parameters exactly as defined below):
+    
+        - idea_number
+        - idea_title
+        - cancer_type: {cancer_type}
+        - cell_type_code: (single code for cell types involved in idea)
+        - biological_hypothesis
+        - analytical_methodological_implementation
+        - estimated_complexity: (0..10)
+        - parameter_type: (e.g., cell counting, spatial, other)
+        - analysis_principle: (e.g., direct measurement, modelling easy, modelling hard)
+    
+    **Rules:**
+
+    - **No text, explanations, or comments are allowed outside the JSON object.**
+    - Output must be a valid JSON list. Any deviation is not acceptable.
+
+
+idea_review_B:
+  description: >
+    We have cohorts of patients with malignant tumors, specifically focused 
+    on a cohort of patients with {cancer_type}. For this cohort, we have access to 
+    digitized whole-slide images of tumor sections stained with Hematoxylin & Eosin 
+    (H&E) only. No additional immunohistochemistry, gene expression, or sequencing data 
+    is available, and we cannot validate with public datasets.
+
+    Two main types of processed data are available:
+
+      1) Tissue Segmentation Masks: A high-precision, pixel-wise, multi-class tissue 
+      segmentation algorithm has generated masks for these slides, saved as PNG files. 
+      Each pixel in these masks represents a class (integer-coded). Only tumor-associated 
+      classes (e.g., epithelial tumor tissue, tumor stroma, necrotic debris, mucin, 
+      tertiary lymphoid structures) are retained; all other regions, including background, 
+      are masked (assigned a pixel value of 0).
+
+      2) Single-Cell Detection & Classification: A second algorithm detects and classifies 
+      all cells within the tumor regions, specifically in the epithelial and stromal compartments. 
+      Cells detected outside these regions (e.g., in necrotic debris, mucin, or tertiary lymphoid 
+      structures) are excluded. Detected cell nuclei are stored as polygons (coordinates) in a 
+      GeoJSON file with classifications as follows:
+
+          - Tumor cells
+          - Lymphocytes
+          - Plasma cells
+          - Macrophages
+          - Neutrophilic granulocytes
+          - Eosinophilic granulocytes
+          - Connective tissue cells (primarily cancer-associated fibroblasts)
+
+      This data enables both feature extraction at the single-cell level and spatial relationships 
+      among different cell types.
+    
+    **Instructions that were used for Idea Generation process**:
+      - You are prompted to generate ideas that explore methods and hypotheses to
+        analyse the cells mentioned above for predicting patient survival or tumor progression.
+      - When generating ideas, you are free to choose any of the seven above mentioned cell types.
+        However, each generated idea must involve {number_cell_types} distinct cell type(s).
+        Choice of cell type(s) is at your discretion. 
+      - Each idea can involve one (e.g., only tumor cells or only lymphocytes) or multiple cell types
+        (e.g., tumor cells + lymphocytes + macrophages). The example of most advanced constellation concerning
+        number of cell types involved in an idea is an idea building a parameter involving all seven cell types.
+      - One idea is always only one resulting parameter.
+      - When proposing ideas that involve morphometric parameters, focus on one specific parameter for 
+        each idea. For example, instead of saying “analyze cell nuclei parameters,” specify a single parameter 
+        like “analyze the maximal axis length of cell nuclei” or “analyze the area of cell nuclei.” 
+        These examples are abstract and meant to illustrate the principle of concentrating on one parameter 
+        when discussing morphometry, regardless of the specific cell type(s) involved.
+      - Ensure that each idea is as concrete and detailed as possible. Avoid abstractions and generalizations. 
+        Provide clear, specific formulations that leave no room for ambiguity.
+      - Consider the meaningful cytological features for the cells of a single type that can be extracted from the polygons.
+      - Consider that the GeoJSON files with single-cell detections and classifications are associated with the original H&E-stained images. 
+        This means that additional features for single cells can be extracted from the H&E images since the 
+        coordinates of their locations are known (polygons in the GeoJSON files).
+      - Even if we have only one time point in our data, ideas involving temporal aspect are still possible. Consider, 
+        that different regions within single tumors are sub-clones that evolved from ancestor cell populations and, therefore, 
+        represent indirectly a temporal dimension in our data. 
+    
+    **Definitions that were used for Idea Generation output**:
+        - **Cell type code**: Single code for cells involved in idea.
+          - Use following abbreviations:
+                T: tumor cells
+                L: lymphocytes
+                P: plasma cells
+                M: macrophages 
+                N: Neutrophilic granulocytes
+                E: Eosinophilic granulocytes
+                F: Connective tissue cells (primarily cancer-associated fibroblasts)
+          - To generate a single code for output field "cell_type_code" use following principle:
+                E.g., idea involves only lymphocytes. Code: "L".
+                E.g., idea involves tumor cells, macrophages, and plasma cells. Code: "TMP".
+    
+    **Format that was defined for Idea Generation Output**:
+      Ideas should be presented as a JSON-formatted list, each containing:
+        - idea_number
+        - idea_title
+        - cancer_type: {cancer_type}
+        - cell_type_code: (single code for cell types involved in idea)
+        - biological_hypothesis
+        - analytical_methodological_implementation
+        - estimated_complexity: (0..10)
+        - parameter_type: (e.g., cell counting, spatial, other)
+        - analysis_principle: (e.g., direct measurement, modelling easy, modelling hard)
+    
+    **Your Task**:
+    You will receive JSON-formatted ideas consecutively numbered.
+    These ideas explore how the cells (single or multiple cell types) can be analyzed to derive prognostic 
+    or predictive insights from the data, specifically for predicting patient survival or tumor progression. 
+    Your task is to review each idea for adherence to above mentioned guidelines. Specifically:
+      •	Ensure each idea adheres strictly to the data modalities (e.g., no use of non-available data like gene expression or non-available cell types).
+      • If idea is related to morphometry of single cell type, it evaluates one single parameter.
+      • The idea is not abstract and not too general and investigates a clear parameter.
+      • If the idea involves temporal aspect, consider that the analysis is still possible, even if we have
+        only one time point in our data. Different regions within single tumors are sub-clones that evolved
+        from ancestor cell populations and therefore represent indirectly a temporal dimension in our data. 
+      • Reject the ideas that involve more or less than {number_cell_types} distinct cell type(s).
+        The choice of cell types can be arbitrary.
+      •	Reject ideas with significant guideline violations, such as omitted cell types or use of unavailable data modalities.
+
+  expected_output: >
+    Provide an updated JSON-formatted list containing all ideas, with the following parameters included for each idea:
+    
+        - idea_number
+        - idea_title
+        - cancer_type: {cancer_type}
+        - cell_type_code: (single code of cell types involved in idea)
+        - biological_hypothesis
+        - analytical_methodological_implementation
+        - estimated_complexity: (0..10)
+        - parameter_type: (e.g., cell counting, spatial, other)
+        - analysis_principle: (e.g., direct measurement, modelling easy, modelling hard)
+        - rejection: (e.g., yes, no)
+        - rejection_reason: (detailed description of rejection reason if rejected)
+    
+    **Rules:**
+
+    - **No text, explanations, or comments are allowed outside the JSON object.**
+    - Output must be a valid JSON list. Any deviation is not acceptable.
+
+idea_review_C:
+  description: >
+    We have cohorts of patients with malignant tumors, specifically focused 
+    on a cohort of patients with {cancer_type}. For this cohort, we have access to 
+    digitized whole-slide images of tumor sections stained with Hematoxylin & Eosin 
+    (H&E) only. No additional immunohistochemistry, gene expression, or sequencing data 
+    is available, and we cannot validate with public datasets.
+
+    Two main types of processed data are available:
+
+      1) Tissue Segmentation Masks: A high-precision, pixel-wise, multi-class tissue 
+      segmentation algorithm has generated masks for these slides, saved as PNG files. 
+      Each pixel in these masks represents a class (integer-coded). Only tumor-associated 
+      classes (e.g., epithelial tumor tissue, tumor stroma, necrotic debris, mucin, 
+      tertiary lymphoid structures) are retained; all other regions, including background, 
+      are masked (assigned a pixel value of 0).
+
+      2) Single-Cell Detection & Classification: A second algorithm detects and classifies 
+      all cells within the tumor regions, specifically in the epithelial and stromal compartments. 
+      Cells detected outside these regions (e.g., in necrotic debris, mucin, or tertiary lymphoid 
+      structures) are excluded. Detected cell nuclei are stored as polygons (coordinates) in a 
+      GeoJSON file with classifications as follows:
+
+          - Tumor cells
+          - Lymphocytes
+          - Plasma cells
+          - Macrophages
+          - Neutrophilic granulocytes
+          - Eosinophilic granulocytes
+          - Connective tissue cells (primarily cancer-associated fibroblasts)
+
+      This data enables both feature extraction at the single-cell level and spatial relationships 
+      among different cell types.
+    
+    **OBJECTIVE**
+      Malignant tumors are lethal primarily because they metastasize. Once a tumor has spread to distant sites, 
+      surgical resection alone can no longer prevent eventual fatality. However, if the tumor remains localized 
+      and has not yet metastasized, surgical removal can be curative. For carcinomas (epithelial malignant tumors), 
+      the most common route of metastasis is through lymphatic vessels into regional lymph nodes.
+
+      Therefore, the key challenge is to determine which tumors have already metastasized and which have not. 
+      The objective is to identify specific morphological features and the underlying biological mechanisms that can
+      reliably indicate whether a carcinoma has metastasized.
+    
+    **Instructions that were used for Idea Generation process: conceptual**:
+
+      - You are prompted to generate ideas that explore methods and hypotheses to
+        analyse the cells mentioned above in order to predict if a tumor has metastasized.
+      - Your ideas may focus on just one cell type (e.g., tumor cells alone) or multiple cell types (e.g., tumor cells + lymphocytes + macrophages).
+      - The most comprehensive approach might incorporate all seven cell types under consideration.
+      - Consider the cellular dynamics and interactions among different cell types that enable tumor cells to enter 
+        lymphatic vessels and spread to lymph nodes.
+      - Analysis of tumor cell microenvironment might provide essential clues to metastatic behaviour.
+      - Bear in mind the high heterogeneity of malignant tumors, which can evolve into multiple subclones with varying 
+        aggressiveness. These subclones compete, adapt, and cooperate.
+      - Often, only a small part of the tumor acquires the features necessary for metastatic spread.
+      - These features may be evident in one focal area of the tumor (unifocal) or in multiple areas simultaneously (multifocal).
+      - Think about key signaling pathways (e.g., angiogenesis, stroma induction, immune escape) and how these affect 
+        cellular morphology and spatial organization of the cells in context of metastatic spread. 
+
+    **Instructions that were used for Idea Generation process: methodology**:
+
+      - One idea is always only one resulting parameter.
+      - Ensure that each idea is as concrete and detailed as possible. Avoid abstractions and generalizations. 
+        Provide clear, specific formulations that leave no room for ambiguity.
+      - Consider the meaningful cytological features for the cells of a single type that can be extracted from the polygons.
+      - Consider that the GeoJSON files with single-cell detections and classifications are associated with the original H&E-stained images. 
+        This means that additional features for single cells can be extracted from the H&E images since the 
+        coordinates of their locations are known (polygons in the GeoJSON files).
+      - Even if we have only one time point in our data, ideas involving temporal aspect are still possible. Consider, 
+        that different regions within single tumors are sub-clones that evolved from ancestor cell populations and, therefore, 
+        represent indirectly a temporal dimension in our data. 
+      - Consider, that we cannot analyse vessels or endothelial cells, only fibroblasts in stroma.
+    
+    **Definitions that were used for Idea Generation output**:
+        - **Cell type code**: Single code for cells involved in idea.
+          - Use following abbreviations:
+                T: tumor cells
+                L: lymphocytes
+                P: plasma cells
+                M: macrophages 
+                N: Neutrophilic granulocytes
+                E: Eosinophilic granulocytes
+                F: Connective tissue cells (primarily cancer-associated fibroblasts)
+          - To generate a single code for output field "cell_type_code" use following principle:
+                E.g., idea involves only lymphocytes. Code: "L".
+                E.g., idea involves tumor cells, macrophages, and plasma cells. Code: "TMP".
+    
+    **Format that was defined for Idea Generation Output**:
+      Ideas should be presented as a JSON-formatted list, each containing:
+        - idea_number
+        - idea_title
+        - cancer_type: {cancer_type}
+        - cell_type_code: (single code for cell types involved in idea)
+        - biological_hypothesis
+        - analytical_methodological_implementation
+        - estimated_complexity: (0..10)
+        - parameter_type: (e.g., cell counting, spatial, other)
+        - analysis_principle: (e.g., direct measurement, modelling easy, modelling hard)
+    
+    **Your Task**:
+    - You will receive JSON-formatted ideas consecutively numbered.
+    - These ideas explore how the cells (single or multiple cell types) can be analyzed to predict if a 
+      malignant tumor has metastasized. 
+    - Your task is to review each idea for adherence to above mentioned guidelines. Specifically:
+      •	Ensure each idea adheres strictly to the data modalities (e.g., no use of non-available data like gene expression or non-available cell types).
+      • If idea is related to morphometry of single cell type, it evaluates one single parameter.
+      • The idea is not abstract and not too general and investigates a clear parameter.
+      • If the idea involves temporal aspect, consider that the analysis is still possible, even if we have
+        only one time point in our data. Different regions within single tumors are sub-clones that evolved
+        from ancestor cell populations and therefore represent indirectly a temporal dimension in our data. 
+      •	Reject ideas with significant guideline violations, such as omitted cell types or use of unavailable data modalities.
+
+  expected_output: >
+    Provide an updated JSON-formatted list containing all ideas, with the following parameters included for each idea:
+    
+        - idea_number
+        - idea_title
+        - cancer_type: {cancer_type}
+        - cell_type_code: (single code of cell types involved in idea)
+        - biological_hypothesis
+        - analytical_methodological_implementation
+        - estimated_complexity: (0..10)
+        - parameter_type: (e.g., cell counting, spatial, other)
+        - analysis_principle: (e.g., direct measurement, modelling easy, modelling hard)
+        - rejection: (e.g., yes, no)
+        - rejection_reason: (detailed description of rejection reason if rejected)
+    
+    **Rules:**
+
+    - **No text, explanations, or comments are allowed outside the JSON object.**
+    - Output must be a valid JSON list. Any deviation is not acceptable.
+
+idea_review_D:
+  description: >
+    **Initial description of available data**
+
+          *Cohort and tissue microarray*
+
+          We have cohorts of patients with malignant tumors, specifically focused
+          on a cohort of patients with {cancer_type}. For this cohort a tissue microarray (TMA) was 
+          constructed from tumor tissue. Each tumor is a primary tumor, not metastasis. This TMA usually 
+          includes one tissue spot for each tumor.
+
+          *Imaging*
+
+          This TMA was analysed using multiplexed imaging with a panel that includes multiple markers allowing
+          the differentiation between different cell populations. 
+
+          The images were later digitized and preprocessed to map different cell types. Here are several abstract examples:
+          -A cell expresses pan-cytokeratin - this is a tumor cell. 
+          -A cell expresses CD3 and CD8 - this is cytotoxic T-lymphocyte.
+
+          *Data modalities*
+
+          No additional gene expression or sequencing data is available, and we cannot validate with public datasets.
+
+          Two main types of processed data are available:
+
+          1) Tissue Structure Segmentation Masks. Several types of tissue structures are available from image analysis:
+              - Vessels (can be analysed directly)
+              - Epithelial structures (cannot be analysed directly, but were used to classify the position of single cells)
+      
+
+          2) Single-Cell Detection & Classification Masks. Based on expression patterns several types of cells were detected
+          and classified in the images. All cells were processed in each image. Following cell types are present in the masks:
+              - Tumor cells: epithelial tumor cells
+              - Cytotoxic T lymphocytes: CD8+ T lymphocytes
+              - Helper T lymphocytes: CD4+/FOXP3- T lymphocytes
+              - Regulatory T lymphocytes: CD4+/FOXP3+ T lymphocyte
+              - B Lymphocytes
+              - Plasma cells
+              - Macrophages
+              - Granulocytes: eosinophilic and neutrophilic granulocytes together
+              - Myofibroblasts PDPN+
+              - Myofibroblasts: all other, PDPN-
+              - Fibroblasts FSP1+
+              - Fibroblasts: all other, FSP1-
+              - Endothelial cells
+              - Antigen presenting cells (APC)
+
+          Note: a) Cells where exact classification was not possible are masked and not relevant for your task. b) both vessel masks 
+           and single-cell detection & classification masks are stored in one GeoJSON file as polygons. c) The detection of the cells 
+           is based on the nucleus, and polygons in GeoJSON file represent nuclei. d) For each cell (based on the above mentioned
+           mapping of epithelial structures) is known if it resides within epithelial or stromal compartment. 
+           e) PDPN+ (Podoplanin) myofibroblasts are a subset of myofibroblasts that were associated with tumor progression,
+           vessel invasion, and other negative events in malignant epithelial tumors. f) FSP1+ fibroblasts are a subset
+           of fibroblasts associated with inflammation, tissue remodelling, epithelial-to-mesenchymal transition of cells,
+           and some other processes, presumably contributing to tumor progression.
+
+          *Analysis possibilities*
+
+          This data enables both feature extraction at the single-cell level and analysis of spatial relationships 
+          among different cell types and tissue structures.
+
+    **Initial instructions that were used for Idea Generation process**
+
+        - You are prompted to generate ideas that explore methods and hypotheses to
+          analyse the cells and/or tissue structures mentioned above for predicting patient survival or tumor progression. 
+        - Each idea can involve one (e.g., only tumor cells or only lymphocytes) or multiple cell types
+          (e.g., tumor cells + cytotoxic T lymphocytes + macrophages). The example of most advanced constellation concerning
+          number of cell types involved in an idea is an idea building a parameter involving all fourteen cell types.
+        - Each idea might or might not (then analysing only cells) use abovementioned tissue structures.
+        - Some cells stem from one cell type (for example, PDPN+ myofibroblasts and other fibroblasts) and might be merged, 
+          if necessary for analysis. 
+        - One idea is always only one resulting parameter.
+        - When proposing ideas that involve morphometric parameters, focus on one specific parameter for 
+          each idea. For example, instead of saying “analyze cell nuclei parameters,” specify a single parameter 
+          like “analyze the maximal axis length of cell nuclei” or “analyze the area of cell nuclei.” 
+          These examples are abstract and meant to illustrate the principle of concentrating on one parameter 
+          when discussing morphometry, regardless of the specific cell type(s) involved.
+        - Ensure that each idea is as concrete and detailed as possible. Avoid abstractions and generalizations. 
+          Provide clear, specific formulations that leave no room for ambiguity.
+        - Consider the meaningful cytological features for the cells of a single type that can be extracted from the polygons.
+        - Consider that the GeoJSON files are not associated with the original H&E-stained images or multiplexed images. 
+          This means that no additional features for single cells can be extracted from such images. You work only with 
+          GeoJSONs.
+    
+    **Initial definitions that were used for Idea Generation output**
+
+        - **Idea title**: should clearly explain the parameter and involved cell types as this will be used later
+          for duplicate detection.
+
+        - **Cell type code**: Single code for cells involved in idea.
+          - Use following abbreviations:
+                TU: Tumor cells
+                Tc: Cytotoxic T lymphocytes
+                Th: Helper T lymphocytes
+                Treg: Regulatory T lymphocytes
+                B: B Lymphocytes
+                P: Plasma cells
+                M: Macrophages
+                G: Granulocytes
+                MFp: Myofibroblasts PDPN+
+                MF: Myofibroblasts - all other, PDPN-
+                Ff: Fibroblasts FSP1+
+                F: Fibroblasts - all other, FSP1-
+                E: Endothelial cells
+                A: Antigen presenting cells (APC)
+
+          - To generate a single code for output field "cell_type_code" use following principle:
+                E.g., idea involves only B lymphocytes. Code: "B".
+                E.g., idea involves tumor cells, macrophages, plasma cells, and FSP1+ fibroblasts. Code: "TU,M,P,Ff".
+
+        - **Estimated Complexity**: Rate the complexity of implementing the idea on a scale of 0 to 10. 
+          - *0* means minimal complexity, with straightforward calculations or analyses.
+          - *10* indicates high complexity, requiring advanced modeling or multiple processing steps.
+          - Consider factors such as the data preparation involved, analytical difficulty,
+            Python script programming, and computational resources required.
+
+        - **Parameter Type**: Specify the type of primary data or feature used in the analysis.
+          - *Cell Counting*: Focuses on counting cell types, such as the number or proportion of certain cells.
+          - *Spatial*: Relies on spatial features like cell proximity, density, or patterns of cell clustering.
+          - *Other*: Encompasses additional features.
+
+        - **Analysis Principle**: Describe the general approach needed for the analysis.
+          - *Direct Measurement*: Involves straightforward, raw data analyses without complex transformations.
+          - *Modelling Easy*: Requires modeling, but it is relatively simple (e.g., linear models, etc.).
+          - *Modelling Hard*: Involves advanced or multi-step modeling (e.g., deep learning models, 
+            cellular automata, complex multi-variable relationships, probabilistic models, etc.).
+    
+    **Format that was defined for Idea Generation Output**:
+      Ideas should be presented as a JSON-formatted list, each containing:
+        - idea_number
+        - idea_title
+        - cancer_type: {cancer_type}
+        - cell_type_code: (single code for cell types involved in idea)
+        - biological_hypothesis
+        - analytical_methodological_implementation
+        - estimated_complexity: (0..10)
+        - parameter_type: (e.g., cell counting, spatial, other)
+        - analysis_principle: (e.g., direct measurement, modelling easy, modelling hard)
+    
+    **Your Task**:
+    You will receive JSON-formatted ideas consecutively numbered.
+    
+    These ideas explore how the cells (single or multiple cell types) and tissue structures can be analyzed to derive prognostic 
+    or predictive insights from the data, specifically for predicting patient survival or tumor progression. 
+    
+    Your task is to review each idea for adherence to above mentioned guidelines. Specifically:
+      •	Ensure each idea adheres strictly to the data modalities (e.g., no use of non-available data like gene expression or non-available cell types).
+      • If idea is related to morphometry of single cell type, it evaluates one single parameter.
+      • The idea is not abstract and not too general and investigates a clear parameter.
+      
+      •	Reject ideas with significant guideline violations.
+
+  expected_output: >
+    Provide an updated JSON-formatted list containing all ideas, with the following parameters included for each idea:
+    
+        - idea_number
+        - idea_title
+        - cancer_type: {cancer_type}
+        - cell_type_code: (single code of cell types involved in idea)
+        - biological_hypothesis
+        - analytical_methodological_implementation
+        - estimated_complexity: (0..10)
+        - parameter_type: (e.g., cell counting, spatial, other)
+        - analysis_principle: (e.g., direct measurement, modelling easy, modelling hard)
+        - rejection: (e.g., yes, no)
+        - rejection_reason: (detailed description of rejection reason if rejected)
+    
+    **Rules:**
+
+    - **No text, explanations, or comments are allowed outside the JSON object.**
+    - Output must be a valid JSON list. Any deviation is not acceptable.
+
+
+duplicate_detection:
+  description: >
+    Task description:
+    **Input** 
+      • A single idea to be evaluated for originality:
+      {idea_temp}
+    
+      • A list of existing ideas:
+      {idea_database_chunk}
+    
+    **Similarity assessment guidelines**
+      - Biological Hypothesis:
+        • Compare the scientific hypotheses. Ideas with similar biological aims or predictions 
+        are more likely duplicates. Different hypotheses within the same general theme can be 
+        considered more original.
+      - Methodological Approach:
+        • Evaluate the methods proposed to test the hypothesis. Ideas using the same analytical 
+        method (e.g., clustering vs. density analysis) suggest higher similarity, while distinct 
+        approaches can indicate originality.
+      - Titles and Keywords:
+        • Look for overlapping keywords or phrases. Shared terminology often points to conceptual 
+        overlap, while unique language might suggest a novel angle.
+
+      Scoring Guide 
+        - You provide one single score for the whole idea. 
+          • 9-10: High overlap in hypothesis, method, and parameters; likely a duplicate.
+          • 5-8: Moderate overlap in a few aspects; likely original.
+          • 0-4: Distinct hypothesis, method, or focus; original.
+      
+    **Analysis Steps**
+      1. Comparison: Calculate a similarity score (0 to 10) for the new idea against 
+         each of the existing ideas.
+      2. Evaluation:
+        • **ONLY IF any similarity score is greater than {similarity_rejection_threshold}, mark the new idea as a duplicate**.
+        • Otherwise, mark the new idea as original.
+        • If all scores are {similarity_rejection_threshold} or lower, mark it as original.
+    
+    **Additional considerations**
+      • Empty List of Existing Ideas:
+         • If the list is empty, return a similarity score as 0 and decision as original.
+
+  expected_output: >
+    A JSON-formatted list:
+    {{
+        "similarity_scores": [Similarity_score_1, Similarity_score_2, ..., Similarity_score_{chunk_number_ideas}],
+        "decision": (duplicate or original)
+    }}
+    
+    **Rules:**
+
+    - **ABSOLUTELY NO additional text, explanations, or comments are allowed inside and outside the JSON object.**
+    - Output must be a valid JSON list. Any deviation is not acceptable.
+
+idea_refinement_he:
+  description: >
+    **Task Description**
+
+        **Input:**
+        
+        - **Idea to Refine:** 
+        
+            {idea_refine}
+        
+        - **Idea Generation Principles:**
+    
+          - **Data Available:**
+            - Cohorts of patients with malignant tumors.
+            - Digitized whole-slide images (WSIs) of H&E-stained tumor sections.
+            - No additional immunohistochemistry, gene expression, or sequencing data.
+            - Two main types of processed data:
+              1. **Tissue Segmentation Masks:**
+                 - High-precision, pixel-wise, multi-class segmentation masks.
+                 - Each pixel represents a class (integer-coded).
+                 - Only tumor-associated classes are retained (epithelial and stromal tumor compartment); other regions are masked (pixel value 0).
+                 - Tissue segmentation masks cannot be analysed separately and were only used to define in which compartment (epithelial
+                   tumor compartment or tumor stroma compartment) each single cell is located. 
+              2. **Single-Cell Detection & Classification:**
+                 - All cells are detected (based on nucleus detection) and classified within tumor regions (epithelial and stromal compartments).
+                 - Cell nuclei detections are stored as polygons in GeoJSON files.
+                 - Cell classifications:
+                   - Tumor cells
+                   - Lymphocytes
+                   - Plasma cells
+                   - Macrophages
+                   - Neutrophilic granulocytes
+                   - Eosinophilic granulocytes
+                   - Connective tissue cells (primarily cancer-associated fibroblasts)
+                 - Enables feature extraction at the single-cell level and analysis of spatial relationships and more complex concepts 
+                   among above mentioned different cell types.
+                 - Additional features for single cells can be extracted from H&E images. This is possible as polygon coordinates are known.
+    
+        - **Relevant Python Code Structure:**
+              1. **Cell Objects:**
+                 - Each cell is stored as a `cell` object with properties:
+                   - `index`: Index in the list of cells.
+                   - `cell_class`: Cell type.
+                   - `polygon`: Shapely polygon for cell nucleus (pixel coordinates in the original WSI) .
+                   - `CentroidPix`: Centroid of the polygon (pixel coordinates in the WSI).
+                   - `in_mask_set`: Tissue class the cell is in ("Tumor", "Stroma").
+                        -"Tumor" - epithelial tumor compartment with tumor cells, seldom lymphocytes or other cells in close proximity of tumor cells.
+                        -"Stroma" - tumor stroma, here all immune and stromal cells, no tumor cells. 
+                   - `ImageColor`: Small Pillow RGB image containing the cell.
+                   - `ImageGrey`: NumPy ndarray grayscale image containing the cell.
+                   - `ImageMask`: NumPy ndarray with True/False values indicating cell object pixels in `ImageColor` and `ImageGrey`.
+              2. **Patch Sampling:**
+                 - Cells from WSIs are sampled in patches (e.g., 1 mm × 1 mm) using a sliding window to account for intratumoral heterogeneity.
+                 - Each patch has a label whether if it stems from the tumor center (tumor interior) or invasion front (outer layer).
+                   You don't need to compute where tumor center and invasion front are. This information will be provided later to the coding agent.
+                 - Parameters are analyzed for cells present in each patch, and outputs are saved at the patch level (typically in CSV file). 
+                 - If a parameter considers comparison of tumor center and invasion front - don't do this final comparison step yourself, just compute patch-level parameter values. 
+                   Note: In such situations, the output is still patch-level parameter values. The comparison will be performed separately, outside of the script.
+                 - Multiple images per patient case may exist. Subsequent aggregation from CSV files (e.g., for multiple images) is not part of this script.
+              3. **Whole-Slide Analysis:**
+                 - For analyses/parameters involving whole-slide images, larger patch sizes must be used (e.g., 20 mm × 20 mm).
+        
+        **Your Task:**
+        - You receive a JSON-formatted idea. You have to refine analytical/methodological implementation.
+        - Provide a concrete, step-by-step methodological approach aligned with the Python code structure above.
+        - If the implementation cannot be realized within the Python script, mark the idea as non-feasible.
+        - If the idea is too abstract and does not describe a clearly defined parameter, mark the idea as non-feasible.
+        - Avoid such phrases as "potentially using" or "e.g." or "could involve" in implementation description, the implementation
+          should be concrete and solid without any room for uncerainty or ambiguity.
+        - Be so specific as possible. This refined methodological approach will be used by the coding agent to
+          code a Python code snippet.
+        - The starting point for implementation is described in Relevant Python Code Structure.
+          Such tasks as loading whole-slide image, GeoJSON file, preprocessing the single cells from GeoJSON are already done.
+          You are working with resulting cell objects.
+        - Your ending point of implementation is saving the parameter values/outputs into csv files. All correlations 
+          and further analysis involving survival endpoints are not in your scope.
+
+  expected_output: >
+        **Output:** 
+        A JSON-formatted list:
+          {{
+          "decision_refinement": ("feasible" or "non-feasible"),
+          "decision_refinement_clarification": (Detailed reason if non-feasible),
+          "implementation_steps": {{ #Additionally, if the decision is feasible
+              "implementation_step_1": "Description of Step 1",
+              "implementation_step_2": "Description of Step 2",
+              ...
+              "implementation_step_X": "Description of Step X"
+              }}
+          }}
+                  
+        **Rules:**
+        - No text, explanations, or comments are allowed outside the JSON object.
+        - Output must be a valid JSON list; any deviation is unacceptable.
+        - Use as many implementation steps as necessary.
+
+idea_refinement_mplex:
+  description: >
+    **Task Description**
+
+        **Input:**
+        
+        - **Idea to Refine:** 
+        
+            {idea_refine}
+        
+        - **Idea Generation Principles:**
+    
+          - **Data Available:**
+            - Cohort of patients with breast cancer.
+            - A tissue microarray (TMA) was constructed from tumor tissue, single spots are single patient tumors.
+            - This TMA was analysed using multiplexed imaging with an antibody panel that includes multiple markers allowing
+              the differentiation between different cell populations. 
+            - Original H&E image or any other cell/tissue images are not available; only processed maps are available for analysis. 
+            - No additional immunohistochemistry, gene expression, or sequencing data is available.
+            - Tissue segmentation masks were used to define in which compartment each single cell is located.
+            - Three main types of processed data are available for analysis.
+              1. **Tissue masks**
+                 - Masks of epithelial and stromal compartment. Masks of stromal compartment exclude vessels
+                   that are provided separately.
+              2. **Vessel Objects:**
+                 - Polygons of all vessels in the TMA spot are available.
+              3. **Single-Cell Detection & Classification:**
+                 - All cells are detected (based on nucleus detection) and classified within single TMA spots.
+                 - Cell nuclei detections are stored as polygons.
+                 - Available cell classifications:
+                     Tumor cells (TU)
+                     Cytotoxic T lymphocytes (Tc)
+                     Helper T lymphocytes (Th)
+                     Regulatory T lymphocytes (Treg)
+                     B Lymphocytes (B)
+                     Plasma cells (P)
+                     Macrophages (M)
+                     Granulocytes (G)
+                     Myofibroblasts PDPN+ (MFp)
+                     Myofibroblasts - all other, PDPN- (MF)
+                     Fibroblasts FSP1+ (Ff)
+                     Fibroblasts - all other, FSP1- (F)
+                     Endothelial cells (E)
+                     Antigen presenting cells (APC or A)
+                 - Enables feature extraction at the single-cell level and analysis of spatial relationships and more complex concepts 
+                   among above mentioned different cell types.
+                 
+        - **Relevant Python Code Structure:**
+              
+              1. **List of cell objects.**
+                 - You can access 'list_of_cell_objects' which is a list of all cell objects present in a single TMA spot.
+    
+              2. **Cell Objects:**
+                 - Each cell is stored as a `cell` object with properties:
+                   - `index`: Index in the list of cells.
+                   - `cell_class`: Cell type.
+                   - `polygon`: Shapely polygon for cell nucleus (pixel coordinates in the original WSI) .
+                   - `CentroidPix`: Centroid of the polygon (pixel coordinates in the WSI).
+                   - `in_mask_set`: Tissue class the cell is in ("Tumor", "Stroma", "Vessel").
+                        -"Tumor" - epithelial tumor compartment with tumor cells, seldom lymphocytes or other cells in close proximity of tumor cells.
+                        -"Stroma" - tumor stroma, here all immune and stromal cells, no tumor cells. 
+                        -"Vessel" - any of the vessels present in TMA core.
+              
+              3. **Cell types ('cell_class' property of cell objects)**
+                    "epithelial_cell": Tumor cells (TU)
+                    "t_cell_cd8": Cytotoxic T lymphocytes (Tc)
+                    "t_cell_cd4": Helper T lymphocytes (Th)
+                    "t_cell_reg": Regulatory T lymphocytes (Treg)
+                    "b_cell": B Lymphocytes (B)
+                    "plasma_cell": Plasma cells (P)
+                    "macrophage": Macrophages (M)
+                    "granulocyte": Granulocytes (G)
+                    "myofibroblast_pdpn": Myofibroblasts PDPN+ (MFp)
+                    "myofibroblast": Myofibroblasts - all other, PDPN- (MF)
+                    "fibroblast_fsp1": Fibroblasts FSP1+ (Ff)
+                    "fibroblast": Fibroblasts - all other, FSP1- (F)
+                    "endothelial_cell": Endothelial cells (E)
+                    "ap_cell": Antigen presenting cells (APC or A)
+              
+              4. **Mask of tissue compartments.**
+                  - `TissueMask`: 2D numpy integer array that indicates the tissue compartments in a TMA spot.
+                     Pixel values are: "Background": 0, "Tumor, epithelial compartment": 1, 
+                     "Tumor, stromal compartment" (including vessels): 2. 
+                  
+              5. **Vessel polygons.**
+                  - You can access 'list_of_vessel_polygons' which is a list of polygons of all vessels in a single TMA spot.
+              
+              6. **TMA spot analysis:**
+                 - Each TMA spot (representative of each single tumor) is processed as a whole. No tiling or any other similar strategies are implemented. 
+                 - Parameters are analyzed for cells present in each TMA spot, and outputs are saved at the TMA spot level (typically in CSV file). 
+                 - Multiple TMA spots/images per patient case may exist. Subsequent aggregation from CSV files (e.g., for multiple images) is not part of this script.
+               
+        **Your Task:**
+        - You receive a JSON-formatted idea. You have to refine analytical/methodological implementation.
+        - Provide a concrete, step-by-step methodological approach aligned with the Python code structure above.
+        - If the implementation cannot be realized within the Python script, mark the idea as non-feasible.
+        - If the idea is too abstract and does not describe a clearly defined parameter, mark the idea as non-feasible.
+        - Avoid such phrases as "potentially using" or "e.g." or "could involve" in implementation description, the implementation
+          should be concrete and solid without any room for uncerainty or ambiguity.
+        - Be so specific as possible. This refined methodological approach will be used by the coding agent to
+          code a Python code snippet.
+        - The starting point for implementation is described in Relevant Python Code Structure.
+          Such tasks as loading images/masks, GeoJSON files with cells, preprocessing the single cells from GeoJSON are already done.
+          You are working with resulting cell objects, tissue masks (if necessary), and vessel objects (if necessary).
+        - Your ending point of implementation is saving the parameter values/outputs into csv files. All correlations 
+          and further analysis involving survival endpoints are not in your scope.
+
+  expected_output: >
+        **Output:** 
+        A JSON-formatted list:
+          {{
+          "decision_refinement": ("feasible" or "non-feasible"),
+          "decision_refinement_clarification": (Detailed reason if non-feasible),
+          "implementation_steps": {{ #Additionally, if the decision is feasible
+              "implementation_step_1": "Description of Step 1",
+              "implementation_step_2": "Description of Step 2",
+              ...
+              "implementation_step_X": "Description of Step X"
+              }}
+          }}
+                  
+        **Rules:**
+        - No text, explanations, or comments are allowed outside the JSON object.
+        - Output must be a valid JSON list; any deviation is unacceptable.
+        - Use as many implementation steps as necessary.
+
+
+idea_coding:
+  description: >
+    Task description:
+    **Input**
+      • **An idea describing an analytical parameter with a detailed methodological approach (JSON-formatted) to be
+        coded as a Python code snippet**:
+
+        {idea_to_code}
+
+      • **Implementation steps to follow while creating a Python code snippet**:
+
+        {implementation_steps}
+
+      • **Principle and structure of the main.py file (cell analysis pipeline). The Python code snippet
+        with the idea/parameter realization should be later integrated into main.py**
+
+            Following parts of the main.py are relevant and preceed to the implementation of the idea/parameter:
+
+            1) Loading the JSON file containing code snippet of the idea/parameter (No changes needed).
+
+                with open(SNIPPET_PATH, 'r') as file:
+                    content_file_list = file.read()
+                    # Remove code block markers
+                    cleaned_content_file_list = content_file_list.strip('```json\n').strip('```')
+                data = json.loads(cleaned_content_file_list)
+
+                Comment: SNIPPETH_PATH is a path to JSON file (you will generate this JSON file in this task).
+
+                2) Extracting the relevant information from your JSON file (No changes needed).
+
+        # Extract data from the JSON
+        idea_uid = data.get("idea_uid")
+        tissue_types_input = data.get("tissue_types")
+        cell_types_code_raw = data.get("cell_type_code")
+        cell_types_input = get_cell_types(cell_types_code_raw)
+        patch_size_mode = data.get("patch_size_mode")
+        python_code = data.get("python_code")
+        print("Tissue:", tissue_types_input, "/ Cells: ", cell_types_input)
+        print("Patch-size-mode:", patch_size_mode)
+        Eval_Obj.set_current_patch_key(Eval_Obj.get_patch_key(patch_size_mode))
+
+
+                Comments:
+                a. tissue_types, cell_type_code, python_code, patch_size_mode are parts of JSON file that you will generate in this task.
+                b. get_cell_types() is the already programmed function to translate cell type codes into format acceptable
+                by the script (no changes needed).
+                c. patch_size_mode is a parameter that describes on what kind of patches the analysis is done, a string-variable with only two possible values (!) "standard_1000m"
+                or "large_5000m". You need to choose between those two modes according to the description details below.
+                d. cell indices using cell types involved into the idea implementation and tumor compartment
+                (No changes needed).
+
+                3) Getting patch IDs of interesting regions, to be saved lated (No changes needed).
+            sign_indices = Eval_Obj.get_significant_indices()
+
+            4) getting cell-ids in the patches of interest (No changes needed).
+                cell_ids_in_patches = Eval_Obj.get_cell_ids_of_celltypes_in_tissues(
+                            cell_types = cell_types_input,
+                            tissue_types = tissue_types_input,
+                            )
+
+                5) Preparation of a local dictionary to serve as the execution context. (No changes needed)
+            # Write the code to a temporary file
+            with tempfile.NamedTemporaryFile(suffix=".py", delete=False) as tmp_file:
+            tmp_file_name = tmp_file.name
+            tmp_file.write(python_code.encode('utf-8'))
+
+                # Provide a dictionary with the globals that the script needs
+                  init_globals = {{
+                      "cell_ids_in_patches": cell_ids_in_patches,
+                      "Eval_Obj": Eval_Obj,
+                      "sign_indices": sign_indices,
+                      "patchwise_tissue_masks": patchwise_tissue_masks
+                  }}
+
+                6) Execute the Python code from the JSON file with idea/parameter implementation. (No changes needed)
+                #%% Run the code in the tmp file with time-constraint and error-log
+               run_with_timeout(timeout=time_threshold_seconds, tmp_file_name = tmp_file_name,
+               time_log_folder=time_log_folder, idea_uid = idea_uid,
+               path_name = tmp_file, init_globals=init_globals)
+
+      • **Structure of the Python code (python_code) snippet with the idea/parameter realization that you program**
+          Each coded snippet should start parameter analysis with following part.
+          The outer for-loop iterates over the patches and is mandatory (!) **
+
+          # -> HERE ALL NEEDED IMPORTS FOLLOWED BY FUNCTION DEFINITIONS (IF NEEDED). MANDATORY TO BUNDLE IMPORTS AT THE HEADER
+
+          # -> HERE DEFINITION OF EMPTY LISTS FOR EVERY OUTPUT-VARIABLE (PER PATCH)
+
+          for patch_id, cell_ids_in_patch, patch_tissue_mask in zip(sign_indices, cell_ids_in_patches, patchwise_tissue_masks):
+              # iterating over patches
+              # make a list of cell objects of chosen cells in the current patch
+              cells_objects_in_patch = [ Eval_Obj.single_cell_list[i] for i in cell_ids_in_patch ]
+              for cell_object in cell_objects_in_patch: #iterate over single cells within current patch
+                  # -> HERE YOUR IMPLEMENTATION OF IDEA/PARAMETER
+                  # -> COMPUTE PARAMETER AND TRACK RESULTS
+
+          # -> HERE ALL CODE FOR OUTPUT SAVING INTO CSV FILE (ROWS = PATCHES, COLUMNS = PARAMETER DATA )
+
+          __COMMENTS REGARDING THE STRUCTURE OF THE DATA__
+          a. Note that whole-slide image is processed in patches. These typically have size of 1000x1000 micrometer to account
+             for intratumoral heterogeneity (if patch_size_mode == "standard_1000m"), and contain cells of different types.
+             If patch_size_mode == "large_5000m", they have a size of 5000x5000 micrometer and contain more cells.
+          b. You need to choose between "standard_1000m" and "large_5000m". "standard_1000m" is the standard setting, it gives a fine resolution for the analysis-output.
+             Choose "large_5000m" only for computing parameters that need a large sample size or for statistics that require analysis at different scales or on large patches,
+             for example when analyzing the shape, length, composition, dimensionality of sets, tissues or tissue-interfaces, where more robust contextual information is needed.
+          c. The Python implementation of idea should be placed within the "for cell_object in cell_objects_in_patch:" loop for most parameters (e.g. mean cell-size).
+             For more complex parameters, the structure using a simple loop over the individual cells "for cell_object in cell_objects_in_patch" might not be suitable.
+             Take a different approach if necessary, but use the standard approach if possible.
+
+          d. Each cell-object encodes the information about the cell-core of a cell in the patch.
+             For Implementation of idea/parameter, use the below properties of the cell objects, consistently available for all cells (!).
+             Always access these parameters using cell_object.<parameter_name> rather than cell_object['parameter_name'].
+          'index',            # index in the list of cells
+          'cell_class',       # cell type
+          'polygon',          # Shapely polygon of the cell-core (pixel coordinates in the original WSI)
+          'CentroidPix'       # Centroid of the cell-core (pixel coordinates in the WSI).
+          'in_mask_set',      # a set that describes in which tissue type(s) the cell is located ( typically has a single entry, either set("Tumor") or set("Stroma") )
+          'ImageColor',       # Small local image that contains the cell-core: 2D PIL image with 4 channels - RGBA format (!)
+          'ImageGrey',        # numpy.ndarray: Greyscale Image that contains the cell-core, same region as ImageColor
+          'ImageMask'         # numpy.ndarray with True/False values, indicating the pixels that are not associated to the cell-core in ImageColor and ImageMask
+          'Neighborhood_50ym'    # List of indices of ALL other cells in a local neighborhood of 50ym around the cell.
+          		      # For example, you can get a list of all corresponding cell-objects by: "neighbors = [Eval_Obj.single_cell_list[idx] for idx in cell.Neighborhood_50ym]"
+          'nearest_of_other_type'   # a dictionary that for each cell_type: contains the indices of the two nearest other cells of this type.
+          			    # For example, given a tumor-cell, you can get the two nearest lymphocytes-cell-objects by:
+          			    # "Lymphos = [Eval_Obj.single_cell_list[idx] for idx in cell.nearest_of_other_type["Lymphocyte"]]
+
+          e. 'cell.in_mask_set' shows in which tissue-domain/area a specific cell is located.
+            For example, a cell is intraepithelial (=in tumor region) if ' "Tumor" in cell_object.in_mask_set',
+            and intrastromal (in the tumor-neighboring connective tissue) if ' "Stroma" in cell_object.in_mask_set '.
+            IMPORTANT: Epithelial=Tumor cells are located ONLY in the 'Tumor' region, Connective=Fibroblast cells are located ONLY in the 'Stroma' region (!)
+
+          f. The patch_tissue_mask encodes the tumor and stroma areas of the current patch and is of lower resolution than the other objects.
+             Using the patch_tissue_mask is optional, depending on the idea that is to code (!).
+             Each patch_tissue_mask is 2D np array, that is scaled down by a factor of 16 (in both x and y) compared to the pixel-values given for the cell-objects.
+             Each patch_tissue_mask is a downscaled version of the entire whole-slide image.
+             However, for each patch, all regions that are not part of the patch are deleted = 0 = background in the corresponding patch_tissue_mask.
+             Each entry of the mask can have only one of three numeric values, indicating the locally dominating tissue-type:
+                      0 -> Background area, 1 -> Tumor area, 2 -> Stroma area
+             For all computations that quantify the tumor-invasion zone = tumor-stroma border region, you MUST use the mask (!) to compute an intermediate zone region of ~50ym width.
+
+          g. For 'cell_class' parameter, use following values:
+            'Epithelial': Tumor cell (!)
+            'Lymphocyte': Lymphocyte
+            'Plasma': Plasma cell
+            'Neutrophil': Neutrophil
+            'Eosinophil': Eosinophil
+            'Macrophage': Macrophage
+            'Connective': Fibroblast (!)
+
+        __COMMENTS ON OUTPUT-PARAMETERS__
+           *Outputs are (typically) generated within the "for cell_object in cell_objects_in_patch:" loop, FOR EACH PATCH.
+           *You have to decide which output metrics are most appropriate, and represent the biological question at best. Think very carefully.
+            For example:
+                i. For morphometric parameters with single measurement in a patch (i.e., one patch = one value),
+                saving "VALUE" is enough.
+                ii. For morphometric/spatial parameters with multiple measurements within one patch (i.e., one patch = many values of different cells or cell-types),
+                saving descriptive summarizing statistics for parameter per patch ("MIN_VALUE", "MAX_VALUE", "MEAN_VALUE", "SD") are a good choice.
+                iii. Decide carefully about output parameters in more complex cases.
+                iv. Strictly (!) avoid binary classifications in the final output parameters, for example do not classify tumors in "immune-cold" vs "immune-hot".
+                    Instead, carefully choose continuos/gradual metrics for non-binary parametrization of the input-idea.
+                v. For complex ideas that rely on evaluating several parameters, store the important parameters that correspond to the input idea
+                   If possible, store additionally an aggregated and properly weighted "SCORE"-parameter (that uses the other parameters) per patch.
+           *If the parameters encode certain distances or sizes (e.g. cell-cell distance, area of tumor cell, diameter of tumor cell etc...),
+            convert them in micrometer at the end of the analysis, before storing in the csv.
+           *To convert pixels into micrometers (only for output), use the following formula: 1 px = 0.25 micrometers (μm) at original full resolution.
+           *Do not save intermediate calculations in the csv (e.g., cell counts etc.) or values used for computing final parameters, only final parameter,
+           (evtl. with supportive descriptive statistics).
+           *Strictly limit output parameters to those explicitly defined in the idea (!). Still, compute as many descriptive output parameters as necessary.
+           *Columns in the output must have informative, short names that explain the stored parameters.
+
+      __COMMENTS ON ORGANIZATION AND CODING OF OUTPUT__
+          * Save outputs into csv file to folder {csv_save_dir}, where each row / line = one patch (this is mandatory (!)), each parameter is a column.
+          * For each output-parameter, create an empty list before starting the loop "for patch_id, cell_ids_in_patch, patch_tissue_mask..."
+          * patch_id is the unique identifier of the patch under analysis, which will be stored in the PATCH_ID column.
+          * During the computations, store the per-patch values in the parameter-lists.
+          * Make sure that you generate output for all patches. For each patch, check if all necessary parameters can be computed.
+            For example, check if a minimal amount of required cells of all needed types is present.
+            If a parameter can not be computed for a specific patch, paste np.nan as entry for this patch, since all fields in the output-csv need to have a value.
+            DO NOT catch unexpected errors via try/except (!).
+          * All file-handling and storing operations must be done AFTER THE COMPUTATIONS ARE FINISHED. It is mandatory (!!) to use only the following 5 steps:
+                1) paste the entire data into a pd dataframe "df". The first column is always "PATCH_ID" where we store the patch_id as unique identifier of the patches.
+                   The other columns are given by the computed variables, and are filled with the generated lists of values.
+          	2) create a str variable output_file for the path/filename of the csv. Use {idea_uid} as a file name and add .csv extension.
+          	3) call "os.makedirs(os.path.dirname(output_file), exist_ok=True)" for creating the output-folder if necessary
+          	4) use the command "df.to_csv(output_file, index = False)" for output-storage
+                5) call "assert os.path.exists(output_file), 'NO CSV OUTPUT GENERATED'" as a final checkup that everything worked
+
+      __IMPORTANT COMMENTS REGARDING THE COMPUTATIONS OF THE PARAMETERS__
+           *All coordinates are pixels. Do all computations in pixels.
+           *When working with "large_5000m", computations involving larger sets of cell-polygons (such as nearest neighbor search or polygon-unions) are ineffective.
+           *Avoid computationally ineffective operations (the analysis on single patches should be quick, within seconds), for example:
+              •Prefer other approaches (such as direct distance-based check etc) over polygon-buffer operations, if possible.
+              •When dealing with large-scale objects that possibly contain many cells (such as tissue regions or interfaces, other regions defined by many cells),
+               strictly avoid buffering and joining unions of many polygons (!). Insterad carefully think about an implementation that uses the cell-centroids.
+               For example, cou can place the cell-centroids in an lower-resolution image (typical factor 16, as for tissue-mask-level), and use binary dilation / inflation.
+               Examples where using the polygons is preferred:
+                   1) Polygons are dealt with one by one, examples: analysis of the cell-shape, cell-area or other cell-properties.
+                   2) Each operation considers only few cells: buffering neighboring polygons, searching for local cell-overlap, neighbor-search (for exampple searching for
+                   the nearest tumor neighor of a lymphocyte).
+                   3) Computing the sum of areas of cells: for example for computing the area occupied by all tumor-polygons.
+               Examples where using the polygons is strictly (!) forbidden:
+                   1) Buffering unions of many cell-polygons (for example involving all tumor-cells in a patch).
+                   2) Creating complex shapes using many polygons (for example for calculating a border-region of all connective cells and all tumor cells in a patch).
+
+           *You can sub-select for cells (of any type) that reside either in the stroma-region or the tumor-region region by checking ' "Tumor" in cell_object.in_mask_set '
+            or ' "Stroma" in cell_object.in_mask_set '. This is necessary if a parameter compares the distribution of the cells in the tumor and stroma regions.
+           *The "Tumor" and "Stroma" region encode biologically important regions, that can possibly contain a diverse set of cells. If you need to analyze the tissue-regions
+            and not the individual cells, therefore use the tissue-mask.
+           *IMPORTANT: Tumor cells are ONLY in the Tumor-region, and Connective cells are ONLY in the stroma region. All other cell-types can be found in both regions.
+           *Assert that you do not divide by zero and not not call log(x) when x can be zero, for example if a certain condition is not met by any cell in the patch.
+            Try to smoothen the mathematical operation (e.g. use x / (y+1) where y is a critical value), or set the output-parameter to np.nan for this patch.
+           *Do not catch unexpected errors via try/except clauses (!). This is important for debugging.
+           *The patches represent quadratic regions within the whole-slide image. If you need to convert information about the cells in the patch into a new image,
+            find the correct image-shape by the x and y coordinates of the cells.
+           *The cell_object polygons show only the cell-cores and do not overlap (!). Two cells are in direct contact if their polygons have distance of <=10μm (!).
+            In most cases, the cell-core-polygons of these contacting do not have distance 0, use the 10μm distance as proxy for direct contact (!).
+           *A typical radius for local interaction and neighborhood analysis of a cell is 50 micrometers (!). Two cells are likely to communicate if the distance of
+            their cell-core-polygons is <= 50 μm, for example: a tumor-cell is influenced by all lymphocytes and macrophages in a range of <= 50 μm.
+           *The centroids of the cells can be projected directly into the low-resolution tissue mask by linear downscaling (if needed) via a factor of 16 (!).
+           *Be very careful when dealing with the different resolutions (!), in particular when converting the results in to microns. For the low-resolution patch_tissue_mask, it holds
+            that 1 pixel = 4 micrometer.
+           *Examples where the tissue-mask images should be used: analyzing shape of tumor and stroma tissue or tumor-stroma-interface, tumor-invasion-zone,
+            or for computing the size of the tumor-area per patch, since all areas that do not belong to the current patch are set to 0.
+           *For analyzing the shapes, areas or local neighborhoods of cells, do not operate with downscaled objects, but use the high-resolution polygons of the cells (!).
+           *Do not search for nearest neighbors in the entire patch manually, this is strictly forbidden (!).
+            Instead, either use 1) the list of cell-indices "cell.Neighborhood_50ym" for neigborhood analysis
+            	                2) the list of cell-indices "cell.nearest_of_other_type[other_cell_type]" for the nearest other cell of a specifiy cell-type, e.g. nearest other_cell_type="Macrophage" (string with cell-type)
+            	You can then analyze these cells after calling (convert index into cell-object):
+                	" all_local_cell_objects_for_further_analysis = [ Eval_Obj.single_cell_list[i] for i in cell.Neighborhood_50ym] "
+           *in the new version of skimage.feature, the function "greycomatric" is now called "graycomatrix", and "greycoprops" now "graycoprops"
+           *if needed, you can call scipy squareform for a direct and fast computation of all cell-centroid distances
+           *If you create an empty np.array of strings, set dtype="Un", where "n"=int variable for max string length (!).
+
+
+    **Your Task**:
+      - Provide a Python code snippet for the given idea/parameter.
+      - You code the per-patch analysis and compute the necessary parameters, following the implementation steps above.
+      - Strictly follow any structure specified for main.py above.
+      - Choose patch_size_mode "standard_1000m" or "large_5000m" that best fits the current task and your implementation,
+          verify that you consistently stick to your choice (for code, output and explanation)!
+      - Include all necessary imports.
+      - The code should be self-contained and executable without errors.
+      - Add comments within the code.
+      - Add verbosity to track the implementation of different steps of the code.
+      - Represent newlines in the code snippet as a literal \n (that is, a backslash character followed by the letter n)
+        so that the final JSON output contains these characters exactly as \n rather than being further escaped.
+      -    Do not include any actual newline characters within the "python_code" string. Every intended newline in the code
+        should be represented by \n. Never use \\n instead of \n.
+      - The final output must be a valid JSON object.
+      - At the end ouf python code provide a comment (as multi-line string) with explanation of output metrics saved in csv file.
+        Each lines should correspond to one parameter. Afterwards, add a short remark on the chosen patch_size_mode, and why the choice is suitable for the analysis (mandatory (!))
+      - No additional text or explanation outside the JSON object (!)
+      - Double-check that the final output is in a valid json-format, in particular regarding the quotes in the closing section of the python-code (!)
+
+  expected_output: >
+    ```json
+    {{
+        "idea_uid": {idea_uid},
+        "tissue_types": "ALL",
+        "cell_type_code": {cell_type_code},
+        "patch_size_mode": "<Chosen_Patch_Size_Mode>",
+        "python_code": "<Python code implementing the parameter>"
+    }}
+    ```
+    *(You must replace the content within "python_code" with the actual code implementing the parameter/idea.)*
+    *(You must replace the content in "patch_size_mode" with either "standard_1000m" or "large_5000m", depending on your choice for the code)*
+
+    **Note on formatting (obey the above json-format):**
+    - The field "tissue_types" must always contain the string "ALL".
+    - You must choose a valid entry for the field "patch_size_mode" in the output-json, according to the described rules (mandatory (!))
+
+idea_code_revision:
+  description: >
+    **Inputs**
+       **Idea that should be coded as a Python snippet**
+
+        {idea_to_code}
+
+       **Implementation steps to follow while creating a Python code snippet**:
+
+        {implementation_steps}
+
+       **Initial coding task for Coding Agent**
+
+       • **Principle and structure of the main.py file (cell analysis pipeline). The Python code snippet
+        with the idea/parameter realization should be later integrated into main.py**
+
+            Following parts of the main.py are relevant and preceed to the implementation of the idea/parameter:
+
+            1) Loading the JSON file containing code snippet of the idea/parameter (No changes needed).
+
+                with open(SNIPPET_PATH, 'r') as file:
+                    content_file_list = file.read()
+                    # Remove code block markers
+                    cleaned_content_file_list = content_file_list.strip('```json\n').strip('```')
+                data = json.loads(cleaned_content_file_list)
+
+                Comment: SNIPPETH_PATH is a path to JSON file (you will generate this JSON file in this task).
+
+                2) Extracting the relevant information from your JSON file (No changes needed).
+
+        # Extract data from the JSON
+        idea_uid = data.get("idea_uid")
+        tissue_types_input = data.get("tissue_types")
+        cell_types_code_raw = data.get("cell_type_code")
+        cell_types_input = get_cell_types(cell_types_code_raw)
+        patch_size_mode = data.get("patch_size_mode")
+        python_code = data.get("python_code")
+        print("Tissue:", tissue_types_input, "/ Cells: ", cell_types_input)
+        print("Patch-size-mode:", patch_size_mode)
+        Eval_Obj.set_current_patch_key(Eval_Obj.get_patch_key(patch_size_mode))
+
+
+                Comments:
+                a. tissue_types, cell_type_code, python_code, patch_size_mode are parts of JSON file that you will generate in this task.
+                b. get_cell_types() is the already programmed function to translate cell type codes into format acceptable
+                by the script (no changes needed).
+                c. patch_size_mode is a parameter that describes on what kind of patches the analysis is done, a string-variable with only two possible values (!) "standard_1000m"
+                or "large_5000m". You need to choose between those two modes according to the description details below.
+                d. cell indices using cell types involved into the idea implementation and tumor compartment
+                (No changes needed).
+
+                3) Getting patch IDs of interesting regions, to be saved lated (No changes needed).
+            sign_indices = Eval_Obj.get_significant_indices()
+
+            4) getting cell-ids in the patches of interest (No changes needed).
+                cell_ids_in_patches = Eval_Obj.get_cell_ids_of_celltypes_in_tissues(
+                            cell_types = cell_types_input,
+                            tissue_types = tissue_types_input,
+                            )
+
+                5) Preparation of a local dictionary to serve as the execution context. (No changes needed)
+            # Write the code to a temporary file
+            with tempfile.NamedTemporaryFile(suffix=".py", delete=False) as tmp_file:
+            tmp_file_name = tmp_file.name
+            tmp_file.write(python_code.encode('utf-8'))
+
+                # Provide a dictionary with the globals that the script needs
+                  init_globals = {{
+                      "cell_ids_in_patches": cell_ids_in_patches,
+                      "Eval_Obj": Eval_Obj,
+                      "sign_indices": sign_indices,
+                      "patchwise_tissue_masks": patchwise_tissue_masks
+                  }}
+
+                6) Execute the Python code from the JSON file with idea/parameter implementation. (No changes needed)
+                #%% Run the code in the tmp file with time-constraint and error-log
+               run_with_timeout(timeout=time_threshold_seconds, tmp_file_name = tmp_file_name,
+               time_log_folder=time_log_folder, idea_uid = idea_uid,
+               path_name = tmp_file, init_globals=init_globals)
+
+      • **Structure of the Python code (python_code) snippet with the idea/parameter realization that you program**
+          Each coded snippet should start parameter analysis with following part.
+          The outer for-loop iterates over the patches and is mandatory (!) **
+
+          # -> HERE ALL NEEDED IMPORTS FOLLOWED BY FUNCTION DEFINITIONS (IF NEEDED). MANDATORY TO BUNDLE IMPORTS AT THE HEADER
+
+          # -> HERE DEFINITION OF EMPTY LISTS FOR EVERY OUTPUT-VARIABLE (PER PATCH)
+
+          for patch_id, cell_ids_in_patch, patch_tissue_mask in zip(sign_indices, cell_ids_in_patches, patchwise_tissue_masks):
+              # iterating over patches
+              # make a list of cell objects of chosen cells in the current patch
+              cells_objects_in_patch = [ Eval_Obj.single_cell_list[i] for i in cell_ids_in_patch ]
+              for cell_object in cell_objects_in_patch: #iterate over single cells within current patch
+                  # -> HERE YOUR IMPLEMENTATION OF IDEA/PARAMETER
+                  # -> COMPUTE PARAMETER AND TRACK RESULTS
+
+          # -> HERE ALL CODE FOR OUTPUT SAVING INTO CSV FILE (ROWS = PATCHES, COLUMNS = PARAMETER DATA )
+
+          __COMMENTS REGARDING THE STRUCTURE OF THE DATA__
+          a. Note that whole-slide image is processed in patches. These typically have size of 1000x1000 micrometer to account
+             for intratumoral heterogeneity (if patch_size_mode == "standard_1000m"), and contain cells of different types.
+             If patch_size_mode == "large_5000m", they have a size of 5000x5000 micrometer and contain more cells.
+          b. You need to choose between "standard_1000m" and "large_5000m". "standard_1000m" is the standard setting, it gives a fine resolution for the analysis-output.
+             Choose "large_5000m" only for computing parameters that need a large sample size or for statistics that require analysis at different scales or on large patches,
+             for example when analyzing the shape, length, composition, dimensionality of sets, tissues or tissue-interfaces, where more robust contextual information is needed.
+          c. The Python implementation of idea should be placed within the "for cell_object in cell_objects_in_patch:" loop for most parameters (e.g. mean cell-size).
+             For more complex parameters, the structure using a simple loop over the individual cells "for cell_object in cell_objects_in_patch" might not be suitable.
+             Take a different approach if necessary, but use the standard approach if possible.
+
+          d. Each cell-object encodes the information about the cell-core of a cell in the patch.
+             For Implementation of idea/parameter, use the below properties of the cell objects, consistently available for all cells (!).
+             Always access these parameters using cell_object.<parameter_name> rather than cell_object['parameter_name'].
+          'index',            # index in the list of cells
+          'cell_class',       # cell type
+          'polygon',          # Shapely polygon of the cell-core (pixel coordinates in the original WSI)
+          'CentroidPix'       # Centroid of the cell-core (pixel coordinates in the WSI).
+          'in_mask_set',      # a set that describes in which tissue type(s) the cell is located ( typically has a single entry, either set("Tumor") or set("Stroma") )
+          'ImageColor',       # Small local image that contains the cell-core: 2D PIL image with 4 channels - RGBA format (!)
+          'ImageGrey',        # numpy.ndarray: Greyscale Image that contains the cell-core, same region as ImageColor
+          'ImageMask'         # numpy.ndarray with True/False values, indicating the pixels that are not associated to the cell-core in ImageColor and ImageMask
+          'Neighborhood_50ym'    # List of indices of ALL other cells in a local neighborhood of 50ym around the cell.
+          		      # For example, you can get a list of all corresponding cell-objects by: "neighbors = [Eval_Obj.single_cell_list[idx] for idx in cell.Neighborhood_50ym]"
+          'nearest_of_other_type'   # a dictionary that for each cell_type: contains the indices of the two nearest other cells of this type.
+          			    # For example, given a tumor-cell, you can get the two nearest lymphocytes-cell-objects by: "Lymphos = [Eval_Obj.single_cell_list[idx] for idx in cell.nearest_of_other_type["Lymphocyte"]]
+
+          e. 'cell.in_mask_set' shows in which tissue-domain/area a specific cell is located.
+            For example, a cell is intraepithelial (=in tumor region) if ' "Tumor" in cell_object.in_mask_set',
+            and intrastromal (in the tumor-neighboring connective tissue) if ' "Stroma" in cell_object.in_mask_set '.
+            IMPORTANT: Epithelial=Tumor cells are located ONLY in the 'Tumor' region, Connective=Fibroblast cells are located ONLY in the 'Stroma' region (!)
+
+          f. The patch_tissue_mask encodes the tumor and stroma areas of the current patch and is of lower resolution than the other objects.
+             Using the patch_tissue_mask is optional, depending on the idea that is to code (!).
+             Each patch_tissue_mask is 2D np array, that is scaled down by a factor of 16 (in both x and y) compared to the pixel-values given for the cell-objects.
+             Each patch_tissue_mask is a downscaled version of the entire whole-slide image.
+             However, for each patch, all regions that are not part of the patch are deleted = 0 = background in the corresponding patch_tissue_mask.
+             Each entry of the mask can have only one of three numeric values, indicating the locally dominating tissue-type:
+                      0 -> Background area, 1 -> Tumor area, 2 -> Stroma area
+             For all computations that quantify the tumor-invasion zone = tumor-stroma border region, you MUST use the mask (!) to compute an intermediate zone region of ~50ym width.
+
+          g. For 'cell_class' parameter, use following values:
+            'Epithelial': Tumor cell (!)
+            'Lymphocyte': Lymphocyte
+            'Plasma': Plasma cell
+            'Neutrophil': Neutrophil
+            'Eosinophil': Eosinophil
+            'Macrophage': Macrophage
+            'Connective': Fibroblast (!)
+
+        __COMMENTS ON OUTPUT-PARAMETERS__
+           *Outputs are (typically) generated within the "for cell_object in cell_objects_in_patch:" loop, FOR EACH PATCH.
+           *You have to decide which output metrics are most appropriate, and represent the biological question at best. Think very carefully.
+            For example:
+                i. For morphometric parameters with single measurement in a patch (i.e., one patch = one value),
+                saving "VALUE" is enough.
+                ii. For morphometric/spatial parameters with multiple measurements within one patch (i.e., one patch = many values of different cells or cell-types),
+                saving descriptive summarizing statistics for parameter per patch ("MIN_VALUE", "MAX_VALUE", "MEAN_VALUE", "SD") are a good choice.
+                iii. Decide carefully about output parameters in more complex cases.
+                iv. Strictly (!) avoid binary classifications in the final output parameters, for example do not classify tumors in "immune-cold" vs "immune-hot".
+                    Instead, carefully choose continuos/gradual metrics for non-binary parametrization of the input-idea.
+                v. For complex ideas that rely on evaluating several parameters, store the important parameters that correspond to the input idea
+                   If possible, store additionally an aggregated and properly weighted "SCORE"-parameter (that uses the other parameters) per patch.
+           *If the parameters encode certain distances or sizes (e.g. cell-cell distance, area of tumor cell, diameter of tumor cell etc...),
+            convert them in micrometer at the end of the analysis, before storing in the csv.
+           *To convert pixels into micrometers (only for output), use the following formula: 1 px = 0.25 micrometers (μm) at original full resolution.
+           *Do not save intermediate calculations in the csv (e.g., cell counts etc.) or values used for computing final parameters, only final parameter,
+           (evtl. with supportive descriptive statistics).
+           *Strictly limit output parameters to those explicitly defined in the idea (!). Still, compute as many descriptive output parameters as necessary.
+           *Columns in the output must have informative, short names that explain the stored parameters.
+
+      __COMMENTS ON ORGANIZATION AND CODING OF OUTPUT__
+          * Save outputs into csv file to folder {csv_save_dir}, where each row / line = one patch (this is mandatory (!)), each parameter is a column.
+          * For each output-parameter, create an empty list before starting the loop "for patch_id, cell_ids_in_patch, patch_tissue_mask..."
+          * patch_id is the unique identifier of the patch under analysis, which will be stored in the PATCH_ID column.
+          * During the computations, store the per-patch values in the parameter-lists.
+          * Make sure that you generate output for all patches. For each patch, check if all necessary parameters can be computed.
+            For example, check if a minimal amount of required cells of all needed types is present.
+            If a parameter can not be computed for a specific patch, paste np.nan as entry for this patch, since all fields in the output-csv need to have a value.
+            DO NOT catch unexpected errors via try/except (!).
+          * All file-handling and storing operations must be done AFTER THE COMPUTATIONS ARE FINISHED. It is mandatory (!!) to use only the following 5 steps:
+                1) paste the entire data into a pd dataframe "df". The first column is always "PATCH_ID" where we store the patch_id as unique identifier of the patches.
+                   The other columns are given by the computed variables, and are filled with the generated lists of values.
+          	2) create a str variable output_file for the path/filename of the csv. Use {idea_uid} as a file name and add .csv extension.
+          	3) call "os.makedirs(os.path.dirname(output_file), exist_ok=True)" for creating the output-folder if necessary
+          	4) use the command "df.to_csv(output_file, index = False)" for output-storage
+                5) call "assert os.path.exists(output_file), 'NO CSV OUTPUT GENERATED'" as a final checkup that everything worked
+
+      __IMPORTANT COMMENTS REGARDING THE COMPUTATIONS OF THE PARAMETERS__
+           *All coordinates are pixels. Do all computations in pixels.
+           *When working with "large_5000m", computations involving larger sets of cell-polygons (such as nearest neighbor search or polygon-unions) are ineffective.
+           *Avoid computationally ineffective operations (the analysis on single patches should be quick, within seconds), for example:
+              •Prefer other approaches (such as direct distance-based check etc) over polygon-buffer operations, if possible.
+              •When dealing with large-scale objects that possibly contain many cells (such as tissue regions or interfaces, other regions defined by many cells),
+               strictly avoid buffering and joining unions of many polygons (!). Insterad carefully think about an implementation that uses the cell-centroids.
+               For example, cou can place the cell-centroids in an lower-resolution image (typical factor 16, as for tissue-mask-level), and use binary dilation / inflation.
+               Examples where using the polygons is preferred:
+                   1) Polygons are dealt with one by one, examples: analysis of the cell-shape, cell-area or other cell-properties.
+                   2) Each operation considers only few cells: buffering neighboring polygons, searching for local cell-overlap, neighbor-search (for exampple searching for
+                   the nearest tumor neighor of a lymphocyte).
+                   3) Computing the sum of areas of cells: for example for computing the area occupied by all tumor-polygons.
+               Examples where using the polygons is strictly (!) forbidden:
+                   1) Buffering unions of many cell-polygons (for example involving all tumor-cells in a patch).
+                   2) Creating complex shapes using many polygons (for example for calculating a border-region of all connective cells and all tumor cells in a patch).
+
+           *You can sub-select for cells (of any type) that reside either in the stroma-region or the tumor-region region by checking ' "Tumor" in cell_object.in_mask_set '
+            or ' "Stroma" in cell_object.in_mask_set '. This is necessary if a parameter compares the distribution of the cells in the tumor and stroma regions.
+           *The "Tumor" and "Stroma" region encode biologically important regions, that can possibly contain a diverse set of cells. If you need to analyze the tissue-regions
+            and not the individual cells, therefore use the tissue-mask.
+           *IMPORTANT: Tumor cells are ONLY in the Tumor-region, and Connective cells are ONLY in the stroma region. All other cell-types can be found in both regions.
+           *Assert that you do not divide by zero and not not call log(x) when x can be zero, for example if a certain condition is not met by any cell in the patch.
+            Try to smoothen the mathematical operation (e.g. use x / (y+1) where y is a critical value), or set the output-parameter to np.nan for this patch.
+           *Do not catch unexpected errors via try/except clauses (!). This is important for debugging.
+           *The patches represent quadratic regions within the whole-slide image. If you need to convert information about the cells in the patch into a new image,
+            find the correct image-shape by the x and y coordinates of the cells.
+           *The cell_object polygons show only the cell-cores and do not overlap (!). Two cells are in direct contact if their polygons have distance of <=10μm (!).
+            In most cases, the cell-core-polygons of these contacting do not have distance 0, use the 10μm distance as proxy for direct contact (!).
+           *A typical radius for local interaction and neighborhood analysis of a cell is 50 micrometers (!). Two cells are likely to communicate if the distance of
+            their cell-core-polygons is <= 50 μm, for example: a tumor-cell is influenced by all lymphocytes and macrophages in a range of <= 50 μm.
+           *The centroids of the cells can be projected directly into the low-resolution tissue mask by linear downscaling (if needed) via a factor of 16 (!).
+           *Be very careful when dealing with the different resolutions (!), in particular when converting the results in to microns. For the low-resolution patch_tissue_mask, it holds
+            that 1 pixel = 4 micrometer.
+           *Examples where the tissue-mask images should be used: analyzing shape of tumor and stroma tissue or tumor-stroma-interface, tumor-invasion-zone,
+            or for computing the size of the tumor-area per patch, since all areas that do not belong to the current patch are set to 0.
+           *For analyzing the shapes, areas or local neighborhoods of cells, do not operate with downscaled objects, but use the high-resolution polygons of the cells (!).
+           *Do not search for nearest neighbors in the entire patch manually, this is strictly forbidden (!).
+            Instead, either use 1) the list of cell-indices "cell.Neighborhood_50ym" for neigborhood analysis
+            	                2) the list of cell-indices "cell.nearest_of_other_type[other_cell_type]" for the nearest other cell of a specifiy cell-type, e.g. nearest other_cell_type="Macrophage" (string with cell-type)
+            	You can then analyze these cells after calling (convert index into cell-object):
+                	" all_local_cell_objects_for_further_analysis = [ Eval_Obj.single_cell_list[i] for i in cell.Neighborhood_50ym] "
+           *in the new version of skimage.feature, the function "greycomatric" is now called "graycomatrix", and "greycoprops" now "graycoprops"
+           *if needed, you can call scipy squareform for a direct and fast computation of all cell-centroid distances
+           *If you create an empty np.array of strings, set dtype="Un", where "n"=int variable for max string length (!).
+
+       **Initial Python code snippet generated by the Coding Agent that DOES NOT WORK as intended after running within a main script**
+
+        {code_snippet}
+
+       **Stderr output of the process indicating the problem with the code snippet**
+
+        {stderr}
+
+    **Your task**
+
+     - Your task is to analyze the provided Python code snippet for the given idea/parameter, identify any bugs or errors present.
+       Indications on the errors are also given in {stderr}). Provide a corrected version of the code that resolves these issues. The corrected code should be functional,
+       efficient, and adhere to best practices in Python programming.
+     - Strictly follow any structure specified for main.py above.
+     - Review and include all necessary imports, if necessary.
+     - Review all output metrics that are being generated and update, if necessary.
+     - Review verbosity and comments within the code and update, if necessary. Do not reduce the overall amount of comments and prints.
+     - Review choice of patch_size_mode "standard_1000m" or "large_5000m" that best fits the current task and your implementation.
+       Verify that the choice is consistent (for code, output and explanation)!
+     - The code should be self-contained and executable without errors.
+     - Represent newlines in the code snippet as a literal \n (that is, a backslash character followed by the letter n)
+        so that the final JSON output contains these characters exactly as \n rather than being further escaped.
+     - Do not include any actual newline characters within the "python_code" string. Every intended newline in the code
+        should be represented by \n. Never use \\n instead of \n.
+     - The final output must be a valid JSON object.
+     - At the end ouf python code provide a comment (as multi-line string) with explanation of output metrics saved in csv file.
+        Each lines should correspond to one parameter. Afterwards, add a short remark on the chosen patch_size_mode, and why the choice is suitable for the analysis (mandatory (!))
+     - No additional text or explanation outside the JSON object (!)
+     - Double-check that the final output is in a valid json-format, in particular regarding the quotes in the closing section of the python-code (!)
+
+
+  expected_output: >
+    ```json
+    {{
+        "idea_uid": {idea_uid},
+        "tissue_types": "ALL",
+        "cell_type_code": {cell_type_code},
+        "patch_size_mode": "<Chosen_Patch_Size_Mode>",
+        "python_code": "<Python code implementing the parameter>"
+    }}
+    ```
+    *(You must replace the content within "python_code" with the actual code implementing the parameter/idea.)*
+    *(You must replace the content in "patch_size_mode" with either "standard_1000m" or "large_5000m", depending on your choice for the code)*
+
+    **Note on formatting (obey the above json-format):**
+    - The field "tissue_types" must always contain the string "ALL".
+    - You must choose a valid entry for the field "patch_size_mode" in the output-json, according to the described rules (mandatory (!))
+
+
+
+list_formatting:
+  description: >
+    **Task background**
+    
+      - We have cohort of patients with different malignant tumors. For this cohort, we have access to 
+      digitized whole-slide images of tumor sections stained with Hematoxylin & Eosin 
+      (H&E) only. No additional immunohistochemistry, gene expression, or sequencing data 
+      is available, and we cannot validate with public datasets.
+
+      Two main types of processed data are available:
+
+      1) Tissue Segmentation Masks: A high-precision, pixel-wise, multi-class tissue
+      segmentation algorithm has generated masks for these slides, saved as PNG files. 
+      Each pixel in these masks represents a class (integer-coded). Only tumor-associated 
+      classes (e.g., epithelial tumor tissue, tumor stroma, necrotic debris, mucin,
+      tertiary lymphoid structures) are retained; all other regions, including background, 
+      are masked (assigned a pixel value of 0).
+
+      2) Single-Cell Detection & Classification: A second algorithm detects and classifies
+      all cells within the tumor regions, specifically in the epithelial and stromal compartments. 
+      Cells detected outside these regions (e.g., in necrotic debris, mucin, or tertiary lymphoid
+      structures) are excluded. Detected cell nuclei are stored as polygons in a GeoJSON file
+      with classifications as follows:
+
+          - Tumor cells
+          - Lymphocytes
+          - Plasma cells
+          - Macrophages
+          - Neutrophilic granulocytes
+          - Eosinophilic granulocytes
+          - Connective tissue cells (primarily cancer-associated fibroblasts)
+
+      This data enables both feature extraction at the single-cell level and spatial relationships 
+      among different cell types. 
+    
+      - Human pathologists were asked to formulate the ideas for prognostic parameters.
+      These ideas are formulated very shortly and in German. 
+      Here are several abstract examples:
+      1) "Karzinomzellkerngröße". This means that pathologist wants to analyse the 
+      size of tumor cell nuclei implying that area of the tumor cell nuclei might be important
+      prognostic parameter for malignant tumors.
+      2) "LZ/M Invasionsfront". This means that pathologist wants to analyse ratio between
+      lymphocytes and plasmace cells at the invasion front of the tumor and considers that 
+      this parameter has prognostic value in malignant tumors. 
+    
+      - Sometimes pathologists refer to previous ideas and use instructions for a group of ideas, 
+      here is the abstract example:
+     
+      Text from pathologist:
+        "Im Gesamttumor:
+        1. Zellkerngröße.
+        2. Zellkernform: rund/ovalär etc.
+        3. Zellkernform: Irregularutät der Zellkernmembran
+        4. Nukleolen: Größe
+        5. Nukleolen: Anzahl
+        6. Nukleolen: Farbe 
+        7. Nukleolen: Lokalisation im Zellkern
+  
+        An der Invasionsfront:
+        8.-15. Parameter 1-7."
+    
+      This means that parameters 8-15 are the same parameters as defined in
+      parameters 1-7, however, not for the whole tumor (Parameters 1-7) but
+      only for the invasion front of the tumor.
+    
+      - Note (IMPORTANT): if idea refers to previous parameter, always fully describe the parameter in a title without
+      any references.
+    
+      Here is the abstract example of how to implement this:
+        "
+        12. LZ / (NGZ + EGZ) an der Invasionsfront.
+        13. LZ / (NGZ + EGZ) im Tumorzentrum.
+        14. Ratio Parameter 12 / 13.    
+        "
+        In this situation, the title for parameter 14 should be pronounced in full, for example:
+          "Relationship between ratio of lymphocytes to sum of neutrophilic and eosinophilic granulocytes at invasion front and tumor center"
+        
+    **Input**
+    
+      This is a list of idea titles provided by one pathologist:
+      
+      {idea_title_list}
+    
+    **Instructions**
+    
+      - Here is the list of abbreviations used by pathologists for cells and some other definitions:
+        LZ - lymphocyte
+        M - macrophage
+        NGZ - neutrophilic granulocyte
+        EGZ - eosinophilic granulocyte
+        PZ - plasma cell
+        F - fibroblast
+        TZ - tumor cell
+        TSR - tumor-stroma ratio
+        L1 - invasion of lymphatic vessels
+        TLS - tertiary lymphoid structures
+      - Provide a clear exhaustive title for each idea in English.
+      The parameter/idea must be perfectly clear defined not leaving any place for ambiguity
+      of how the idea/parameter should be implemented. This title will be used later by other agents 
+      to formulate a detailed technical implementation.
+      - If idea implies several parameters, these should be split as separate idea titles
+      The rule is: one title = one clearly defined idea/parameter.
+      - Use consecutive numbering for ideas.
+
+  expected_output: >
+    A JSON-formatted list:
+    {{
+        ["idea_number": consecutive idea number,
+        "idea_title": idea title],
+        [...]
+    }}
+
+    **Rules:**
+
+    - **ABSOLUTELY NO additional text, explanations, or comments are allowed inside and outside the JSON object.**
+    - Output must be a valid JSON list. Any deviation is not acceptable.
+
+idea_formulation:
+  description: >
+    We have cohorts of patients with malignant tumors, specifically focused
+      on a cohort of patients with {cancer_type}. For this cohort, we have access to 
+      digitized whole-slide images of tumor sections stained with Hematoxylin & Eosin 
+      (H&E) only. No additional immunohistochemistry, gene expression, or sequencing data 
+      is available, and we cannot validate with public datasets.
+
+      Two main types of processed data are available:
+
+      1) Tissue Segmentation Masks: A high-precision, pixel-wise, multi-class tissue
+      segmentation algorithm has generated masks for these slides, saved as PNG files. 
+      Each pixel in these masks represents a class (integer-coded). Only tumor-associated 
+      classes (e.g., epithelial tumor tissue, tumor stroma, necrotic debris, mucin,
+      tertiary lymphoid structures) are retained; all other regions, including background, 
+      are masked (assigned a pixel value of 0).
+
+      2) Single-Cell Detection & Classification: A second algorithm detects and classifies
+      all cells within the tumor regions, specifically in the epithelial and stromal compartments. 
+      Cells detected outside these regions (e.g., in necrotic debris, mucin, or tertiary lymphoid
+      structures) are excluded. Detected cell nuclei are stored as polygons in a GeoJSON file
+      with classifications as follows:
+
+          - Tumor cells
+          - Lymphocytes
+          - Plasma cells
+          - Macrophages
+          - Neutrophilic granulocytes
+          - Eosinophilic granulocytes
+          - Connective tissue cells (primarily cancer-associated fibroblasts)
+
+      This data enables both feature extraction at the single-cell level and spatial relationships 
+      among different cell types, including:
+        - meaningful cytological features for the cells of single types that can be extracted from the polygons.
+        - GeoJSON files with single-cell detections and classifications, 
+          along with the tissue segmentation maps, are associated with the original H&E-stained images. 
+          This means additional features for single cells can be extracted from the H&E images since the 
+          coordinates of their locations are known (polygons in the GeoJSON files).
+          
+      **Definitions**:
+      - **Cell type code**: Single code for cells involved in idea.
+        - Use following abbreviations:
+              T: tumor cells
+              L: lymphocytes
+              P: plasma cells
+              M: macrophages 
+              N: Neutrophilic granulocytes
+              E: Eosinophilic granulocytes
+              F: Connective tissue cells (primarily cancer-associated fibroblasts)
+        - To generate a single code for output field "cell_type_code" use following principle:
+              E.g., idea involves only lymphocytes. Code: "L".
+              E.g., idea involves tumor cells, macrophages, and plasma cells. Code: "TMP".
+
+      - **Estimated Complexity**: Rate the complexity of implementing the idea on a scale of 0 to 10. 
+        - *0* means minimal complexity, with straightforward calculations or analyses.
+        - *10* indicates high complexity, requiring advanced modeling or multiple processing steps.
+        - Consider factors such as the data preparation involved, analytical difficulty,
+          Python script programming, and computational resources required.
+
+      - **Parameter Type**: Specify the type of primary data or feature used in the analysis.
+        - *Cell Counting*: Focuses on counting cell types, such as the number or proportion of certain cells.
+        - *Spatial*: Relies on spatial features like cell proximity, density, or patterns of cell clustering.
+        - *Other*: Encompasses additional features.
+
+      - **Analysis Principle**: Describe the general approach needed for the analysis.
+        - *Direct Measurement*: Involves straightforward, raw data analyses without complex transformations.
+        - *Modelling Easy*: Requires modeling, but it is relatively simple (e.g., linear models, etc.).
+        - *Modelling Hard*: Involves advanced or multi-step modeling (e.g., deep learning models, 
+          cellular automata, complex multi-variable relationships, probabilistic models, etc.).
+
+      **Titles of ideas provided by pathologists**
+
+      {idea_title_chunk}
+
+      **Your Task**:
+      
+      -You work with ideas (idea titles) provided by pathologists to formulate them according to guidelines
+      provided below in a standardized way. 
+      -Avoid abstractions and generalizations. Provide clear, specific formulations that leave no room for ambiguity.
+    
+
+  expected_output: >
+      Provide a JSON-formatted list of ideas for supplied idea titles. 
+      Each idea should contain following parameters (use the names of parameters exactly as defined below):
+
+          - idea_number: (use same number as provided above)
+          - idea_title: (use same title as provided above)
+          - cell_type(s): (according to instruction provided above)
+          - biological_hypothesis: (formulate biological hypothesis)
+          - analytical_methodological_implementation: (formulate according to data available)
+          - estimated_complexity: (0..10)
+          - parameter_type: (e.g., cell counting, spatial, other)
+          - analysis_principle: (e.g., direct measurement, modelling easy, modelling hard)
+
+      **Rules:**
+
+      - **No text, explanations, or comments are allowed outside the JSON object.**
+      - Output must be a valid JSON list. Any deviation is not acceptable.  
+

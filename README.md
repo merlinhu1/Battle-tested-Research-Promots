@@ -37,7 +37,7 @@ schemas) so yields are never overstated.
 |---|---|
 | Anthropic — Riemann zeta 67.2% critical-line bound (Aug 10, 2026) | Has hidden, undiscoverable user prompts: the published human inputs are one-liners ("Take a real stab at the Riemann hypothesis", "Keep going / Believe in yourself"); the yield derives from an unreleased research model's hidden harness system prompt, skills, and CLAUDE.md-style instructions. Unusable — deleted. |
 | Anthropic — NMR / LC-MS analytical-chemistry one-liners (Aug 18, 2026) | Same character: two-sentence prompts whose yield is attributable to the unpublished Claude Science harness and skills. Deleted from the protein-design entry. |
-| OpenAI — Graviton amplitudes ("Extending single-minus amplitudes to gravitons", Mar 4, 2026) | No prompt was ever published: the preprint and announcement describe GPT-5.2 Pro + an internal model playing "a significant role at all stages" but release no prompts, transcripts, or harness details. Fails criterion 1 (prompt available). |
+| OpenAI — Graviton amplitudes preprint alone (cdn.openai.com/pdf/graviton.pdf, Mar 4, 2026) | The preprint itself contains no prompts. The graviton work was ACCEPTED via its companion transcript release (gluon-to-graviton-paper.pdf), which publishes the full ChatGPT conversation — see the [Gluon → graviton entry](prompts/openai-gluon-to-graviton/). |
 
 ## The Gallery
 
@@ -47,6 +47,7 @@ schemas) so yields are never overstated.
 |---|---|---|---|
 | [Cycle Double Cover Conjecture](prompts/openai-cycle-double-cover-conjecture/) | Graph theory | Complete proof of the CDC conjecture (all finite bridgeless loopless multigraphs), via GPT 5.6 Sol Ultra with 64-agent adversarial search | 2026 |
 | [First Proof? — solve/verify/refine templates](prompts/openai-first-proof/) | Competition mathematics | Programmatic pipeline producing model-verified solutions to 1stproof.org problems (3/4 correct on the BSS seed idea for Problem #6) | Feb 2026 |
+| [Gluon → graviton single-minus amplitudes](prompts/openai-gluon-to-graviton/) | Quantum gravity | ChatGPT 5.2 Pro generalized the gluon amplitudes paper to gravity from a one-paragraph research instruction, producing the preprint "Single-minus graviton tree amplitudes are nonzero". Full 110-page conversation transcript released | Feb 28, 2026 |
 
 ### Anthropic
 
